@@ -1,8 +1,21 @@
+using Microsoft.EntityFrameworkCore;
+using SiteBlog.Infrastructure.Context;
 using SiteBlog.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
+
+var configuration = builder.Configuration;
+
+services.AddDbContext<BlogContext>(optionsAction: opts =>
+{
+    opts.UseSqlServer(configuration.GetConnectionString("BlogContext"), 
+        sqlOpts => sqlOpts.EnableRetryOnFailure(
+            maxRetryCount: 3, 
+            maxRetryDelay: 
+            TimeSpan.FromSeconds(30), null));
+});
 
 services.AddEndpointsApiExplorer();
 
