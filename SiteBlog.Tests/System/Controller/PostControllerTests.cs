@@ -20,7 +20,7 @@ public class PostControllerTests
         var mockService = new Mock<IPostService>();
 
         mockService
-            .Setup(service => service.GetPosts(1, 10))
+            .Setup(service => service.GetPosts(null, null, 1, 10))
             .ReturnsAsync(PostFixture.GetPosts());
 
         var controller = new PostController(mockService.Object);
@@ -39,7 +39,7 @@ public class PostControllerTests
         var mockService = new Mock<IPostService>();
 
         mockService
-            .Setup(service => service.GetPosts(1, 10))
+            .Setup(service => service.GetPosts(null, null, 1, 10))
             .ReturnsAsync(PostFixture.GetPosts());
 
         var controller = new PostController(mockService.Object);
@@ -49,7 +49,7 @@ public class PostControllerTests
 
         // Assert
         mockService.Verify(
-            service => service.GetPosts(1, 10),
+            service => service.GetPosts(null, null, 1, 10),
             Times.Once());
     }
 
@@ -60,7 +60,7 @@ public class PostControllerTests
         var mockService = new Mock<IPostService>();
 
         mockService
-            .Setup(service => service.GetPosts(1, 10))
+            .Setup(service => service.GetPosts(null, null, 1, 10))
             .ReturnsAsync(PostFixture.GetPosts());
 
         var controller = new PostController(mockService.Object);
@@ -83,7 +83,7 @@ public class PostControllerTests
         var mockService = new Mock<IPostService>();
 
         mockService
-            .Setup(service => service.GetPosts(1, 10))
+            .Setup(service => service.GetPosts(null, null, 1, 10))
             .ReturnsAsync(new List<Post>());
 
         var controller = new PostController(mockService.Object);
