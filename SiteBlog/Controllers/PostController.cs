@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SiteBlog.Services;
 
 namespace SiteBlog.Controllers;
 
@@ -6,9 +7,21 @@ namespace SiteBlog.Controllers;
 [Route("/v1/post")]
 public class PostController : ControllerBase
 {
-    [HttpGet]
-    public async Task<IActionResult> List()
+    private readonly IPostService _postService;
+
+    public PostController(IPostService postService)
     {
-        return null;
+        _postService = postService;
+    }
+
+    [HttpGet(Name = "GetPosts")]
+    public async Task<IActionResult> Get()
+    {
+        var posts = await _postService.GetPosts();
+
+        if (posts is null || !posts.Any())
+            return NotFound();
+
+        return Ok(posts);
     }
 }
