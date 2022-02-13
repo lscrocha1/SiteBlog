@@ -2,12 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SiteBlog.Controllers;
-using SiteBlog.Domain;
 using SiteBlog.Dto;
 using SiteBlog.Services;
 using SiteBlog.Tests.Fixture;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -132,8 +130,8 @@ public class PostControllerTests
         var result = await controller.GetPost(1);
 
         // Assert
-        mockService.Verify(service => 
-            service.GetPost(It.IsAny<int>()), 
+        mockService.Verify(service =>
+            service.GetPost(It.IsAny<int>()),
             Times.Once);
     }
 
