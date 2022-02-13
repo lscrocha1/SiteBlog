@@ -30,11 +30,11 @@ public class BlogContext : DbContext
             opts.HasKey(e => e.Id);
 
             opts.HasMany(e => e.Images)
-                .WithOne()
+                .WithOne(e => e.Post)
                 .OnDelete(DeleteBehavior.Cascade);
 
             opts.HasMany(e => e.Comments)
-                .WithOne()
+                .WithOne(e => e.Post)
                 .OnDelete(DeleteBehavior.Cascade);
 
             opts.HasMany(e => e.Tags)
