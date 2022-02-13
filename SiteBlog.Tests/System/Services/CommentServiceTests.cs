@@ -1,4 +1,5 @@
-﻿using MockQueryable.Moq;
+﻿using FluentAssertions;
+using MockQueryable.Moq;
 using Moq;
 using SiteBlog.Domain;
 using SiteBlog.Dto;
@@ -35,5 +36,39 @@ public class CommentServiceTests
                 Content = Guid.NewGuid().ToString(),
                 UserName = Guid.NewGuid().ToString()
             }));
+    }
+
+    [Fact]
+    public async Task AddComment_Should_AddComment_IntoPost_ByPostGivenId()
+    {
+        // Arrange
+        var mockContext = new Mock<BlogContext>();
+
+        var posts = PostFixture.GetPosts().AsQueryable();
+
+        var postMock = posts.BuildMockDbSet();
+
+        mockContext.Setup(e => e.Posts).Returns(postMock.Object);
+        mockContext.Setup(e => e.Comments).Returns(postMock.Object.SelectMany(e => e.Comments).BuildMockDbSet().Object);
+
+        var commentService = new CommentService(mockContext.Object);
+
+        var postId = new PostId(1);
+        var content = Guid.NewGuid().ToString();
+        var userName = Guid.NewGuid().ToString();
+
+        // Act
+        await commentService.AddComment(postId, new AddCommentDto
+        {
+            Content = content,
+            UserName = userName
+        });
+
+        // Assert 
+        posts
+            .Where(e => e.Id == postId)
+            .SelectMany(e => e.Comments)
+            .Should()
+            .Contain(e => e.Content == content && e.UserName == userName);
     }
 }

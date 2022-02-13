@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SiteBlog.Adapters;
 using SiteBlog.Domain;
 using SiteBlog.Dto;
 using SiteBlog.Infrastructure.Context;
@@ -21,6 +22,13 @@ public class CommentService : ICommentService
 
         if (post is null)
             throw new NotFoundException();
+
+        if (post.Comments == null)
+            post.Comments = new List<Comment>();
+
+        post.Comments.Add(CommentAdapter.MapComment(dto, postId));
+
+        await _blogContext.SaveChangesAsync();
     }
 
     private async Task<Post?> GetPostById(PostId postId)
