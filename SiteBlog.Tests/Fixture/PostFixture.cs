@@ -1,4 +1,5 @@
 ﻿using SiteBlog.Domain;
+using SiteBlog.Dto;
 using System;
 using System.Collections.Generic;
 
@@ -6,6 +7,29 @@ namespace SiteBlog.Tests.Fixture;
 
 public static class PostFixture
 {
+    public static List<ListPostDto> GetListPostDtos()
+    {
+        return new List<ListPostDto>
+        {
+            new ListPostDto
+            {
+                PostId = new PostId(1),
+                CreatedAt = DateTime.Now,
+                Description = Guid.NewGuid().ToString(),
+                ImageDisplay = Guid.NewGuid().ToString(),
+                Title = Guid.NewGuid().ToString()
+            },
+            new ListPostDto
+            {
+                PostId = new PostId(2),
+                CreatedAt = DateTime.Now,
+                Description = Guid.NewGuid().ToString(),
+                ImageDisplay = Guid.NewGuid().ToString(),
+                Title = Guid.NewGuid().ToString()
+            }
+        };
+    }
+
     public static List<Post> GetPosts()
     {
         return new List<Post>

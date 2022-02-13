@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SiteBlog.Domain;
+using SiteBlog.Dto;
 using SiteBlog.Services;
 
 namespace SiteBlog.Controllers;
 
 [ApiController]
-[Route("/v1/[controller]")]
+[Route("/v1/post")]
 public class PostController : ControllerBase
 {
     private readonly IPostService _postService;
@@ -17,10 +19,10 @@ public class PostController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetPosts(
+    public async Task<ActionResult<List<ListPostDto>>> GetPosts(
         [FromQuery] string? search = null,
         [FromQuery] int? tag = null,
-        [FromQuery] int page = 1, 
+        [FromQuery] int page = 1,
         [FromQuery] int limit = 10)
     {
         var posts = await _postService.GetPosts(search, tag, page, limit);
@@ -35,13 +37,13 @@ public class PostController : ControllerBase
     [Route("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetPost([FromRoute]int id)
+    public async Task<ActionResult<Post>> GetPost([FromRoute] int id)
     {
-        var posts = await _postService.GetPosts();
+        var post = await _postService.GetPost(new PostId(id));
 
-        if (posts is null || !posts.Any())
+        if (post is null)
             return NotFound();
 
-        return Ok(posts);
+        return Ok(post);
     }
 }

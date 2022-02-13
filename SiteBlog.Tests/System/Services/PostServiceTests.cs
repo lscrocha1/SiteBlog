@@ -117,7 +117,7 @@ public class PostServiceTests
     }
 
     [Fact]
-    public async Task GetPosts_ReturnsEmptyResult()
+    public async Task GetPost_ReturnSinglePost()
     {
         // Arrange
         var mockContext = new Mock<BlogContext>();
@@ -129,9 +129,28 @@ public class PostServiceTests
         var postService = new PostService(mockContext.Object);
 
         // Act
-        var result = await postService.GetPosts(search: Guid.NewGuid().ToString(), page: 1, limit: 1);
+        var result = await postService.GetPost(new PostId(1));
 
         // Assert
-        result.Should().BeNullOrEmpty();
+        result.Should().NotBeNull();
+    }
+
+    [Fact]
+    public async Task GetPost_ReturnNull_IfNotFound()
+    {
+        // Arrange
+        var mockContext = new Mock<BlogContext>();
+
+        var posts = PostFixture.GetPosts().AsQueryable().BuildMockDbSet();
+
+        mockContext.Setup(e => e.Posts).Returns(posts.Object);
+
+        var postService = new PostService(mockContext.Object);
+
+        // Act
+        var result = await postService.GetPost(new PostId(99));
+
+        // Assert
+        result.Should().BeNull();
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SiteBlog.Adapters;
 using SiteBlog.Domain;
+using SiteBlog.Dto;
 using SiteBlog.Infrastructure.Context;
 
 namespace SiteBlog.Services;
@@ -13,7 +15,15 @@ public class PostService : IPostService
         _blogContext = blogContext;
     }
 
-    public async Task<List<Post>> GetPosts(
+    public async Task<Post?> GetPost(PostId postId)
+    {
+        return await _blogContext
+            .Posts!
+            .Where(e => e.Id == postId)
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task<List<ListPostDto>> GetPosts(
         string? search = null,
         int? tag = null,
         int page = 1,
@@ -37,9 +47,11 @@ public class PostService : IPostService
             query = query.Where(e => e.Tags.Select(e => e.Id).Contains(new TagId(tag.Value)));
         }
 
-        return await query
+        var result = await query
             .Skip((page - 1) * limit)
             .Take(limit)
             .ToListAsync();
+
+        return PostAdapter.MapListPostDto(result);
     }
 }
