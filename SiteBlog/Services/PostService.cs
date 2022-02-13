@@ -15,15 +15,20 @@ public class PostService : IPostService
         _blogContext = blogContext;
     }
 
-    public async Task<Post?> GetPost(int postId)
+    public async Task<PostDto?> GetPost(int postId)
     {
-        return await _blogContext
+        var result = await _blogContext
             .Posts!
             .Where(e => e.Id == postId)
             .FirstOrDefaultAsync();
+
+        if (result is null)
+            return null;
+
+        return PostAdapter.MapPostDto(result);
     }
 
-    public async Task<List<ListPostDto>> GetPosts(
+    public async Task<List<PostsDto>> GetPosts(
         string? search = null,
         int? tag = null,
         int page = 1,
@@ -54,6 +59,6 @@ public class PostService : IPostService
             .Take(limit)
             .ToListAsync();
 
-        return PostAdapter.MapListPostDto(result);
+        return PostAdapter.MapPostsDto(result);
     }
 }

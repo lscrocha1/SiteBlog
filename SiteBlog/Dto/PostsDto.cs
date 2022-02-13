@@ -1,8 +1,8 @@
 ﻿namespace SiteBlog.Dto;
 
-public class ListPostDto
+public class PostsDto
 {
-    public ListPostDto()
+    public PostsDto()
     {
         Title = string.Empty;
         Description = string.Empty;

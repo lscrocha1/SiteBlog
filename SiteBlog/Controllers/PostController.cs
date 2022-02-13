@@ -21,7 +21,7 @@ public class PostController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<List<ListPostDto>>> GetPosts(
+    public async Task<ActionResult<List<PostsDto>>> GetPosts(
         [FromQuery] string? search = null,
         [FromQuery] int? tag = null,
         [FromQuery] int page = 1,
@@ -39,7 +39,7 @@ public class PostController : ControllerBase
     [Route("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Post>> GetPost([FromRoute] int id)
+    public async Task<ActionResult<PostDto>> GetPost([FromRoute] int id)
     {
         var post = await _postService.GetPost(id);
 
