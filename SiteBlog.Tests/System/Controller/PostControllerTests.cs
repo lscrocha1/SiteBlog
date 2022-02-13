@@ -26,7 +26,7 @@ public class PostControllerTests
         var controller = new PostController(mockService.Object);
 
         // Act
-        var result = (OkObjectResult)await controller.Get();
+        var result = (OkObjectResult)await controller.GetPosts();
 
         // Assert
         result.StatusCode.Should().Be(200);
@@ -45,7 +45,7 @@ public class PostControllerTests
         var controller = new PostController(mockService.Object);
 
         // Act
-        var result = (OkObjectResult)await controller.Get();
+        var result = (OkObjectResult)await controller.GetPosts();
 
         // Assert
         mockService.Verify(
@@ -66,7 +66,7 @@ public class PostControllerTests
         var controller = new PostController(mockService.Object);
 
         // Act
-        var result = await controller.Get();
+        var result = await controller.GetPosts();
 
         // Assert
         result.Should().BeOfType<OkObjectResult>();
@@ -89,7 +89,7 @@ public class PostControllerTests
         var controller = new PostController(mockService.Object);
 
         // Act
-        var result = await controller.Get();
+        var result = await controller.GetPosts();
 
         // Assert
         result.Should().BeOfType<NotFoundResult>();

@@ -6,6 +6,7 @@ using SiteBlog.Infrastructure.Context;
 using SiteBlog.Services;
 using SiteBlog.Tests.Fixture;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -74,6 +75,41 @@ public class PostServiceTests
 
         // Act
         var result = await postService.GetPosts(search: "Experience", null, page: 1, limit: 10);
+
+        // Assert
+        result.Should().NotBeNullOrEmpty();
+        result.Should().HaveCount(1);
+    }
+
+    [Fact]
+    public async Task GetPosts_ReturnsFilteredByTagResult()
+    {
+        // Arrange
+        var mockContext = new Mock<BlogContext>();
+
+        var posts = PostFixture.GetPosts();
+
+        var tagId = 888;
+
+        posts.Add(new Post
+        {
+            Tags = new List<Tag>
+            {
+                new Tag
+                {
+                    Id = new TagId(tagId)
+                }
+            }
+        });
+
+        var mockSet = posts.AsQueryable().BuildMockDbSet();
+
+        mockContext.Setup(e => e.Posts).Returns(mockSet.Object);
+
+        var postService = new PostService(mockContext.Object);
+
+        // Act
+        var result = await postService.GetPosts(tag: tagId, page: 1, limit: 10);
 
         // Assert
         result.Should().NotBeNullOrEmpty();
