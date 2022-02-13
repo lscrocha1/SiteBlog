@@ -4,8 +4,10 @@ public class Post
 {
     public Post()
     {
-        Title = string.Empty;
-        Description = string.Empty;
+        EnTitle = string.Empty;
+        PtTitle = string.Empty;
+        PtDescription = string.Empty;
+        EnDescription = string.Empty;
         ImageDisplay = string.Empty;
         EnContent = string.Empty;
         PtContent = string.Empty;
@@ -16,9 +18,13 @@ public class Post
 
     public int Id { get; set; }
 
-    public string Title { get; set; }
+    public string EnTitle { get; set; }
 
-    public string Description { get; set; }
+    public string PtTitle { get; set; }
+
+    public string EnDescription { get; set; }
+
+    public string PtDescription { get; set; }
 
     public string ImageDisplay { get; set; }
 

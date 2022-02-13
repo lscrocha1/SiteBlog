@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SiteBlog.Domain;
 using SiteBlog.Dto;
+using SiteBlog.Infrastructure.Attributes;
 using SiteBlog.Infrastructure.Exceptions;
 using SiteBlog.Services;
 using System.ComponentModel.DataAnnotations;
@@ -9,6 +9,7 @@ namespace SiteBlog.Controllers;
 
 [ApiController]
 [Route("/v1/comment")]
+[ServiceFilter(typeof(LocalizationAttribute))]
 public class CommentController : ControllerBase
 {
     private readonly ICommentService _commentService;

@@ -1,6 +1,4 @@
-﻿using SiteBlog.Domain;
-
-namespace SiteBlog.Dto;
+﻿namespace SiteBlog.Dto;
 
 public class ListPostDto
 {

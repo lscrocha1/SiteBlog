@@ -42,8 +42,10 @@ public class BlogContext : DbContext
                 .OnDelete(DeleteBehavior.Restrict);
 
             opts.Property(e => e.ImageDisplay).HasMaxLength(500);
-            opts.Property(e => e.Description).HasMaxLength(500);
-            opts.Property(e => e.Title).HasMaxLength(255);
+            opts.Property(e => e.EnDescription).HasMaxLength(500);
+            opts.Property(e => e.PtDescription).HasMaxLength(500);
+            opts.Property(e => e.EnTitle).HasMaxLength(255);
+            opts.Property(e => e.PtTitle).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Comment>(opts =>

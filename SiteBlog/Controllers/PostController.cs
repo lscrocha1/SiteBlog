@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SiteBlog.Domain;
 using SiteBlog.Dto;
+using SiteBlog.Infrastructure.Attributes;
 using SiteBlog.Services;
 
 namespace SiteBlog.Controllers;
 
 [ApiController]
 [Route("/v1/post")]
+[ServiceFilter(typeof(LocalizationAttribute))]
 public class PostController : ControllerBase
 {
     private readonly IPostService _postService;

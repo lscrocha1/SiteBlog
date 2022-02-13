@@ -25,7 +25,7 @@ public static class PostFixture
                 CreatedAt = DateTime.Now,
                 Description = Guid.NewGuid().ToString(),
                 ImageDisplay = Guid.NewGuid().ToString(),
-                Title = Guid.NewGuid().ToString()
+                Title = Guid.NewGuid().ToString(),
             }
         };
     }
@@ -46,11 +46,13 @@ public static class PostFixture
                         UserName = Guid.NewGuid().ToString()
                     }
                 },
-                Description = Guid.NewGuid().ToString(),
+                EnDescription = Guid.NewGuid().ToString(),
+                PtDescription = Guid.NewGuid().ToString(),
                 EnContent = Guid.NewGuid().ToString(),
                 ImageDisplay = Guid.NewGuid().ToString(),
                 PtContent = Guid.NewGuid().ToString(),
-                Title = Guid.NewGuid().ToString(),
+                PtTitle = Guid.NewGuid().ToString(),
+                EnTitle = Guid.NewGuid().ToString(),
                 Images = new List<Image>
                 {
                     new Image
@@ -80,11 +82,13 @@ public static class PostFixture
                         UserName = Guid.NewGuid().ToString()
                     }
                 },
-                Description = Guid.NewGuid().ToString(),
+                PtDescription = Guid.NewGuid().ToString(),
+                EnDescription = Guid.NewGuid().ToString(),
                 EnContent = Guid.NewGuid().ToString(),
                 ImageDisplay = Guid.NewGuid().ToString(),
                 PtContent = Guid.NewGuid().ToString(),
-                Title = Guid.NewGuid().ToString(),
+                EnTitle = Guid.NewGuid().ToString(),
+                PtTitle = Guid.NewGuid().ToString(),
                 Images = new List<Image>
                 {
                     new Image

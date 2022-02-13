@@ -64,7 +64,7 @@ public class PostServiceTests
 
         posts.Add(new Post
         {
-            Title = "Experience"
+            EnTitle = "Experience"
         });
 
         var mockSet = posts.AsQueryable().BuildMockDbSet();

@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SiteBlog.Domain;
+using SiteBlog.Infrastructure.Attributes;
 using SiteBlog.Services;
 
 namespace SiteBlog.Controllers;
 
 [ApiController]
 [Route("/v1/tag")]
+[ServiceFilter(typeof(LocalizationAttribute))]
 public class TagController : ControllerBase
 {
     private readonly ITagService _tagService;

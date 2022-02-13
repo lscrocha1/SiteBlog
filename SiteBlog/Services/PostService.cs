@@ -36,8 +36,10 @@ public class PostService : IPostService
         if (!string.IsNullOrEmpty(search))
         {
             query = query.Where(e =>
-                e.Title.ToLower().Contains(search.ToLower())
-                || e.Description.ToLower().Contains(search.ToLower())
+                e.EnTitle.ToLower().Contains(search.ToLower())
+                || e.PtTitle.ToLower().Contains(search.ToLower())
+                || e.EnDescription.ToLower().Contains(search.ToLower())
+                || e.PtDescription.ToLower().Contains(search.ToLower())
                 || e.EnContent.ToLower().Contains(search.ToLower())
                 || e.PtContent.ToLower().Contains(search.ToLower()));
         }
