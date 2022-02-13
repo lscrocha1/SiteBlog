@@ -13,7 +13,7 @@ public static class PostFixture
         {
             new ListPostDto
             {
-                PostId = new PostId(1),
+                PostId = 1,
                 CreatedAt = DateTime.Now,
                 Description = Guid.NewGuid().ToString(),
                 ImageDisplay = Guid.NewGuid().ToString(),
@@ -21,7 +21,7 @@ public static class PostFixture
             },
             new ListPostDto
             {
-                PostId = new PostId(2),
+                PostId = 2,
                 CreatedAt = DateTime.Now,
                 Description = Guid.NewGuid().ToString(),
                 ImageDisplay = Guid.NewGuid().ToString(),
@@ -36,12 +36,12 @@ public static class PostFixture
         {
             new Post
             {
-                Id = new PostId(1),
+                Id = 1,
                 Comments = new List<Comment>
                 {
                     new Comment
                     {
-                        Id = new CommentId(1),
+                        Id = 1,
                         Content = Guid.NewGuid().ToString(),
                         UserName = Guid.NewGuid().ToString()
                     }
@@ -55,7 +55,7 @@ public static class PostFixture
                 {
                     new Image
                     {
-                        Id = new ImageId(1),
+                        Id = 1,
                         Link = Guid.NewGuid().ToString()
                     }
                 },
@@ -63,19 +63,19 @@ public static class PostFixture
                 {
                     new Tag
                     {
-                        Id = new TagId(1),
+                        Id = 1,
                         Name = Guid.NewGuid().ToString()
                     }
                 }
             },
             new Post
             {
-                Id = new PostId(3),
+                Id = 3,
                 Comments = new List<Comment>
                 {
                     new Comment
                     {
-                        Id = new CommentId(3),
+                        Id = 3,
                         Content = Guid.NewGuid().ToString(),
                         UserName = Guid.NewGuid().ToString()
                     }
@@ -89,7 +89,7 @@ public static class PostFixture
                 {
                     new Image
                     {
-                        Id = new ImageId(4),
+                        Id = 4,
                         Link = Guid.NewGuid().ToString()
                     }
                 },
@@ -97,7 +97,7 @@ public static class PostFixture
                 {
                     new Tag
                     {
-                        Id = new TagId(5),
+                        Id = 5,
                         Name = Guid.NewGuid().ToString()
                     }
                 }

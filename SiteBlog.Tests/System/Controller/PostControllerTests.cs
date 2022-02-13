@@ -104,7 +104,7 @@ public class PostControllerTests
         var mockService = new Mock<IPostService>();
 
         mockService
-            .Setup(service => service.GetPost(It.IsAny<PostId>()))
+            .Setup(service => service.GetPost(It.IsAny<int>()))
             .ReturnsAsync(PostFixture.GetPosts().FirstOrDefault()!);
 
         var controller = new PostController(mockService.Object);
@@ -123,7 +123,7 @@ public class PostControllerTests
         var mockService = new Mock<IPostService>();
 
         mockService
-            .Setup(service => service.GetPost(It.IsAny<PostId>()))
+            .Setup(service => service.GetPost(It.IsAny<int>()))
             .ReturnsAsync(PostFixture.GetPosts().FirstOrDefault()!);
 
         var controller = new PostController(mockService.Object);
@@ -133,7 +133,7 @@ public class PostControllerTests
 
         // Assert
         mockService.Verify(service => 
-            service.GetPost(It.IsAny<PostId>()), 
+            service.GetPost(It.IsAny<int>()), 
             Times.Once);
     }
 
@@ -144,7 +144,7 @@ public class PostControllerTests
         var mockService = new Mock<IPostService>();
 
         mockService
-            .Setup(service => service.GetPost(It.IsAny<PostId>()))
+            .Setup(service => service.GetPost(It.IsAny<int>()))
             .ReturnsAsync(PostFixture.GetPosts().FirstOrDefault()!);
 
         var controller = new PostController(mockService.Object);
@@ -163,7 +163,7 @@ public class PostControllerTests
         var mockService = new Mock<IPostService>();
 
         mockService
-            .Setup(service => service.GetPost(It.IsAny<PostId>()))
+            .Setup(service => service.GetPost(It.IsAny<int>()))
             .ReturnsAsync((Post)null!);
 
         var controller = new PostController(mockService.Object);

@@ -39,7 +39,7 @@ public class PostController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Post>> GetPost([FromRoute] int id)
     {
-        var post = await _postService.GetPost(new PostId(id));
+        var post = await _postService.GetPost(id);
 
         if (post is null)
             return NotFound();

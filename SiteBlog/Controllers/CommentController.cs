@@ -19,7 +19,7 @@ public class CommentController : ControllerBase
     }
 
     [HttpPost]
-    [Route("{id}")]
+    [Route("{postId}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -30,7 +30,7 @@ public class CommentController : ControllerBase
     {
         try
         {
-            await _commentService.AddComment(new PostId(postId), dto);
+            await _commentService.AddComment(postId, dto);
 
             return StatusCode(201);
         }

@@ -1,8 +1,5 @@
 ﻿namespace SiteBlog.Domain;
 
-[StronglyTypedId(backingType: StronglyTypedIdBackingType.Int)]
-public partial struct CommentId { }
-
 public class Comment
 {
     public Comment()
@@ -11,7 +8,7 @@ public class Comment
         Content = string.Empty;
     }
 
-    public CommentId Id { get; set; } = new CommentId();
+    public int Id { get; set; }
 
     public string UserName { get; set; }
 
@@ -19,7 +16,7 @@ public class Comment
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-    public PostId PostId { get; set; }
+    public int PostId { get; set; }
 
     public Post? Post { get; set; }
 }

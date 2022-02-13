@@ -1,8 +1,5 @@
 ﻿namespace SiteBlog.Domain;
 
-[StronglyTypedId(backingType: StronglyTypedIdBackingType.Int)]
-public partial struct PostId { }
-
 public class Post
 {
     public Post()
@@ -17,7 +14,7 @@ public class Post
         Comments = new List<Comment>();
     }
 
-    public PostId Id { get; set; } = new PostId();
+    public int Id { get; set; }
 
     public string Title { get; set; }
 

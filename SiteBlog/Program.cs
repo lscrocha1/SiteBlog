@@ -10,10 +10,10 @@ var configuration = builder.Configuration;
 
 services.AddDbContext<BlogContext>(optionsAction: opts =>
 {
-    opts.UseSqlServer(configuration.GetConnectionString("BlogContext"), 
+    opts.UseSqlServer(configuration.GetConnectionString("BlogContext"),
         sqlOpts => sqlOpts.EnableRetryOnFailure(
-            maxRetryCount: 3, 
-            maxRetryDelay: 
+            maxRetryCount: 3,
+            maxRetryDelay:
             TimeSpan.FromSeconds(30), null));
 });
 
@@ -26,6 +26,8 @@ services.AddControllers();
 services.AddTransient<IPostService, PostService>();
 
 services.AddTransient<ICommentService, CommentService>();
+
+services.AddTransient<ITagService, TagService>();
 
 var app = builder.Build();
 

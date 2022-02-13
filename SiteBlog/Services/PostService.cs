@@ -15,7 +15,7 @@ public class PostService : IPostService
         _blogContext = blogContext;
     }
 
-    public async Task<Post?> GetPost(PostId postId)
+    public async Task<Post?> GetPost(int postId)
     {
         return await _blogContext
             .Posts!
@@ -35,7 +35,7 @@ public class PostService : IPostService
 
         if (!string.IsNullOrEmpty(search))
         {
-            query = query.Where(e => 
+            query = query.Where(e =>
                 e.Title.ToLower().Contains(search.ToLower())
                 || e.Description.ToLower().Contains(search.ToLower())
                 || e.EnContent.ToLower().Contains(search.ToLower())
@@ -44,7 +44,7 @@ public class PostService : IPostService
 
         if (tag.HasValue)
         {
-            query = query.Where(e => e.Tags.Select(e => e.Id).Contains(new TagId(tag.Value)));
+            query = query.Where(e => e.Tags.Select(e => e.Id).Contains(tag.Value));
         }
 
         var result = await query

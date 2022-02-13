@@ -5,7 +5,7 @@ namespace SiteBlog.Adapters;
 
 public static class CommentAdapter
 {
-    public static Comment MapComment(AddCommentDto addCommentDto, PostId postId)
+    public static Comment MapComment(AddCommentDto addCommentDto, int postId)
     {
         return new Comment
         {

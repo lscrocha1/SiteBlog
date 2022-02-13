@@ -31,7 +31,7 @@ public class CommentServiceTests
         // Act
         // Assert
         await Assert.ThrowsAsync<NotFoundException>(async () =>
-            await commentService.AddComment(new PostId(99), new AddCommentDto
+            await commentService.AddComment(99, new AddCommentDto
             {
                 Content = Guid.NewGuid().ToString(),
                 UserName = Guid.NewGuid().ToString()
@@ -53,7 +53,7 @@ public class CommentServiceTests
 
         var commentService = new CommentService(mockContext.Object);
 
-        var postId = new PostId(1);
+        var postId = 1;
         var content = Guid.NewGuid().ToString();
         var userName = Guid.NewGuid().ToString();
 

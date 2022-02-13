@@ -30,11 +30,11 @@ public class BlogContext : DbContext
             opts.HasKey(e => e.Id);
 
             opts.HasMany(e => e.Images)
-                .WithOne(e => e.Post)
+                .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
 
             opts.HasMany(e => e.Comments)
-                .WithOne(e => e.Post)
+                .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
 
             opts.HasMany(e => e.Tags)
@@ -69,5 +69,25 @@ public class BlogContext : DbContext
         });
 
         base.OnModelCreating(modelBuilder);
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            var connectionString = configuration.GetConnectionString("BlogContext");
+
+            optionsBuilder.UseSqlServer(connectionString, opts =>
+            {
+                opts.EnableRetryOnFailure(maxRetryCount: 3, maxRetryDelay: TimeSpan.FromSeconds(30), null);
+            });
+        }
+
+        base.OnConfiguring(optionsBuilder);
     }
 }

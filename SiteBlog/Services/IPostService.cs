@@ -11,5 +11,5 @@ public interface IPostService
         int page = 1, 
         int limit = 10);
 
-    Task<Post?> GetPost(PostId postId);
+    Task<Post?> GetPost(int postId);
 }

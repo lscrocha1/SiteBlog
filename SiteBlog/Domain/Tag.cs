@@ -1,8 +1,5 @@
 ﻿namespace SiteBlog.Domain;
 
-[StronglyTypedId(backingType: StronglyTypedIdBackingType.Int)]
-public partial struct TagId { }
-
 public class Tag
 {
     public Tag()
@@ -10,7 +7,7 @@ public class Tag
         Name = string.Empty;
     }
 
-    public TagId Id { get; set; } = new TagId();
+    public int Id { get; set; }
 
     public string Name { get; set; }
 }

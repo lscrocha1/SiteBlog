@@ -42,7 +42,7 @@ public class CommentControllerTests
 
         // Assert
         mockService.Verify(service => 
-            service.AddComment(It.IsAny<PostId>(), It.IsAny<AddCommentDto>()), 
+            service.AddComment(It.IsAny<int>(), It.IsAny<AddCommentDto>()), 
             Times.Once());
     }
 
@@ -53,7 +53,7 @@ public class CommentControllerTests
         var mockService = new Mock<ICommentService>();
 
         mockService
-            .Setup(e => e.AddComment(It.IsAny<PostId>(), It.IsAny<AddCommentDto>()))
+            .Setup(e => e.AddComment(It.IsAny<int>(), It.IsAny<AddCommentDto>()))
             .ThrowsAsync(new NotFoundException());
 
         var controller = new CommentController(mockService.Object);
@@ -76,7 +76,7 @@ public class CommentControllerTests
         var mockService = new Mock<ICommentService>();
 
         mockService
-            .Setup(e => e.AddComment(It.IsAny<PostId>(), It.IsAny<AddCommentDto>()))
+            .Setup(e => e.AddComment(It.IsAny<int>(), It.IsAny<AddCommentDto>()))
             .ThrowsAsync(It.IsAny<Exception>());
 
         var controller = new CommentController(mockService.Object);

@@ -5,5 +5,5 @@ namespace SiteBlog.Services;
 
 public interface ICommentService
 {
-    Task AddComment(PostId postId, AddCommentDto dto);
+    Task AddComment(int postId, AddCommentDto dto);
 }

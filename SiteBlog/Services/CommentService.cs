@@ -16,7 +16,7 @@ public class CommentService : ICommentService
         _blogContext = blogContext;
     }
 
-    public async Task AddComment(PostId postId, AddCommentDto dto)
+    public async Task AddComment(int postId, AddCommentDto dto)
     {
         var post = await GetPostById(postId);
 
@@ -31,7 +31,7 @@ public class CommentService : ICommentService
         await _blogContext.SaveChangesAsync();
     }
 
-    private async Task<Post?> GetPostById(PostId postId)
+    private async Task<Post?> GetPostById(int postId)
     {
         return await _blogContext
             .Posts!

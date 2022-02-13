@@ -97,7 +97,7 @@ public class PostServiceTests
             {
                 new Tag
                 {
-                    Id = new TagId(tagId)
+                    Id = tagId
                 }
             }
         });
@@ -129,7 +129,7 @@ public class PostServiceTests
         var postService = new PostService(mockContext.Object);
 
         // Act
-        var result = await postService.GetPost(new PostId(1));
+        var result = await postService.GetPost(1);
 
         // Assert
         result.Should().NotBeNull();
@@ -148,7 +148,7 @@ public class PostServiceTests
         var postService = new PostService(mockContext.Object);
 
         // Act
-        var result = await postService.GetPost(new PostId(99));
+        var result = await postService.GetPost(99);
 
         // Assert
         result.Should().BeNull();

@@ -1,8 +1,13 @@
 version: '3.4'
 
 services:
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+
   siteblog:
     image: ${DOCKER_REGISTRY-}siteblog
     build:
       context: .
       dockerfile: SiteBlog/Dockerfile
+    depends_on:
+      - db

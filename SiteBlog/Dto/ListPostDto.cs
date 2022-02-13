@@ -11,7 +11,7 @@ public class ListPostDto
         ImageDisplay = string.Empty;
     }
 
-    public PostId PostId { get; set; }
+    public int PostId { get; set; }
 
     public string Title { get; set; }
 
