@@ -25,6 +25,8 @@ services.AddControllers();
 
 services.AddTransient<IPostService, PostService>();
 
+services.AddTransient<ICommentService, CommentService>();
+
 var app = builder.Build();
 
 app.UseSwagger();
