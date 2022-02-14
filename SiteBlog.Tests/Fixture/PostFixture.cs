@@ -80,7 +80,15 @@ public static class PostFixture
                     {
                         Id = 1,
                         Content = Guid.NewGuid().ToString(),
-                        UserName = Guid.NewGuid().ToString()
+                        UserName = Guid.NewGuid().ToString(),
+                        Replies = new List<Reply>
+                        {
+                            new Reply
+                            {
+                                Content = Guid.NewGuid().ToString(),
+                                UserName = Guid.NewGuid().ToString(),
+                            }
+                        }
                     }
                 },
                 EnDescription = Guid.NewGuid().ToString(),
@@ -116,7 +124,15 @@ public static class PostFixture
                     {
                         Id = 3,
                         Content = Guid.NewGuid().ToString(),
-                        UserName = Guid.NewGuid().ToString()
+                        UserName = Guid.NewGuid().ToString(),
+                        Replies = new List<Reply>
+                        {
+                            new Reply
+                            {
+                                Content = Guid.NewGuid().ToString(),
+                                UserName = Guid.NewGuid().ToString(),
+                            }
+                        }
                     }
                 },
                 PtDescription = Guid.NewGuid().ToString(),

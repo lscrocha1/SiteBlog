@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SiteBlog.Adapters;
-using SiteBlog.Domain;
 using SiteBlog.Dto;
 using SiteBlog.Infrastructure.Context;
 
@@ -19,6 +18,10 @@ public class PostService : IPostService
     {
         var result = await _blogContext
             .Posts!
+            .AsNoTracking()
+            .Include(e => e.Tags)
+            .Include(e => e.Images)
+            .Include(e => e.Comments).ThenInclude(e => e.Replies)
             .Where(e => e.Id == postId)
             .FirstOrDefaultAsync();
 
@@ -55,6 +58,7 @@ public class PostService : IPostService
         }
 
         var result = await query
+            .AsNoTracking()
             .Skip((page - 1) * limit)
             .Take(limit)
             .Select(e => new PostsQueryDto

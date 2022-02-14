@@ -23,6 +23,8 @@ public class BlogContext : DbContext
 
     public virtual DbSet<Comment>? Comments { get; set; }
 
+    public virtual DbSet<Reply>? Replies { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Post>(opts =>
@@ -52,6 +54,10 @@ public class BlogContext : DbContext
         {
             opts.HasKey(e => e.Id);
 
+            opts.HasMany(e => e.Replies)
+                .WithOne(e => e.Comment)
+                .OnDelete(DeleteBehavior.Cascade);
+
             opts.Property(e => e.UserName).HasMaxLength(100);
             opts.Property(e => e.Content).HasMaxLength(1000);
         });
@@ -68,6 +74,12 @@ public class BlogContext : DbContext
             opts.HasKey(e => e.Id);
 
             opts.Property(e => e.Link).HasMaxLength(500);
+        });
+
+        modelBuilder.Entity<Reply>(opts =>
+        {
+            opts.Property(e => e.UserName).HasMaxLength(100);
+            opts.Property(e => e.Content).HasMaxLength(1000);
         });
 
         base.OnModelCreating(modelBuilder);

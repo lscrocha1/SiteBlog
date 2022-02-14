@@ -44,4 +44,31 @@ public class CommentController : ControllerBase
             return StatusCode(500);
         }
     }
+
+    [HttpPost]
+    [Route("post/{postId}/comment/{commentId}")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> ReplyComment(
+        [FromRoute][Required] int postId,
+        [FromRoute][Required] int commentId,
+        [FromBody] AddCommentDto dto)
+    {
+        try
+        {
+            await _commentService.ReplyComment(postId, commentId, dto);
+
+            return StatusCode(201);
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
+        }
+        catch (Exception)
+        {
+            return StatusCode(500);
+        }
+    }
 }

@@ -6,6 +6,7 @@ public class CommentDto
     {
         UserName = string.Empty;
         Content = string.Empty;
+        Replies = new List<ReplyDto>();
     }
 
     public int Id { get; set; }
@@ -15,4 +16,6 @@ public class CommentDto
     public string Content { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+    public List<ReplyDto> Replies { get; set; }
 }

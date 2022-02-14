@@ -84,6 +84,14 @@ public static class PostAdapter
                 Content = e.Content,
                 UserName = e.UserName,
                 CreatedAt = e.CreatedAt,
+                Replies = e.Replies.Select(g => new ReplyDto
+                {
+                    Id = g.Id,
+                    Content = g.Content,
+                    UserName = g.UserName,
+                    CreatedAt = g.CreatedAt
+                })
+                .ToList()
             })
             .ToList()
         };
@@ -118,6 +126,14 @@ public static class PostAdapter
                 Content = e.Content,
                 UserName = e.UserName,
                 CreatedAt = e.CreatedAt,
+                Replies = e.Replies.Select(g => new ReplyDto
+                {
+                    Id = g.Id,
+                    Content = g.Content,
+                    UserName = g.UserName,
+                    CreatedAt = g.CreatedAt
+                })
+                .ToList()
             })
             .ToList()
         };

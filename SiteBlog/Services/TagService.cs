@@ -27,7 +27,9 @@ public class TagService : ITagService
             query = query.Where(e => e.Name.ToLower().Contains(search.ToLower()));
         }
 
-        return await query.Skip((page - 1) * limit)
+        return await query
+            .AsNoTracking()
+            .Skip((page - 1) * limit)
             .Take(limit)
             .ToListAsync();
     }

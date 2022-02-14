@@ -1,12 +1,11 @@
-﻿namespace SiteBlog.Domain;
+﻿namespace SiteBlog.Dto;
 
-public class Comment
+public class ReplyDto
 {
-    public Comment()
+    public ReplyDto()
     {
         UserName = string.Empty;
         Content = string.Empty;
-        Replies = new List<Reply>();
     }
 
     public int Id { get; set; }
@@ -16,10 +15,4 @@ public class Comment
     public string Content { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-    public int PostId { get; set; }
-
-    public Post? Post { get; set; }
-
-    public IList<Reply> Replies { get; set; }
 }
