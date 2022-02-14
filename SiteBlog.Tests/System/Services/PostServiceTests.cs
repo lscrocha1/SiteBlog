@@ -153,4 +153,42 @@ public class PostServiceTests
         // Assert
         result.Should().BeNull();
     }
+
+    [Fact]
+    public async Task GetPosts_ReturnsTheCorrectCommentQuantity()
+    {
+        // Arrange
+        var mockContext = new Mock<BlogContext>();
+
+        var posts = PostFixture.GetPosts();
+
+        var postId = 9;
+
+        posts.Add(new Post
+        {
+            Id = postId,   
+            Comments = new List<Comment>
+            {
+                new Comment(),
+                new Comment()
+            }
+        });
+
+        var mockSet = posts.AsQueryable().BuildMockDbSet();
+
+        mockContext.Setup(e => e.Posts).Returns(mockSet.Object);
+        mockContext.Setup(e => e.Comments).Returns(mockSet.Object.SelectMany(e => e.Comments).BuildMockDbSet().Object);
+
+        var postService = new PostService(mockContext.Object);
+
+        // Act
+        var result = await postService.GetPosts(page: 1, limit: 10);
+
+        // Assert
+        var post = result.FirstOrDefault(e => e.PostId == postId);
+
+        post.Should().NotBeNull();
+
+        post!.QuantityComments.Should().Be(2);
+    }
 }

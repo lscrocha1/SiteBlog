@@ -57,6 +57,20 @@ public class PostService : IPostService
         var result = await query
             .Skip((page - 1) * limit)
             .Take(limit)
+            .Select(e => new PostsQueryDto
+            {
+                Id = e.Id,
+                EnTitle = e.EnTitle,
+                EnDescription = e.EnDescription,
+                EnContent = e.EnContent,
+                PtTitle = e.PtTitle,
+                PtContent = e.PtContent,
+                PtDescription = e.PtDescription,
+                ImageDisplay = e.ImageDisplay,
+                UpdatedAt = e.UpdatedAt,
+                CreatedAt = e.CreatedAt,
+                QuantityComments = e.Comments.Count
+            })
             .ToListAsync();
 
         return PostAdapter.MapPostsDto(result);

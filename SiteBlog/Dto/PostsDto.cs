@@ -18,4 +18,6 @@ public class PostsDto
     public string ImageDisplay { get; set; }
 
     public DateTime CreatedAt { get; set; }
+
+    public int QuantityComments { get; set; }
 }

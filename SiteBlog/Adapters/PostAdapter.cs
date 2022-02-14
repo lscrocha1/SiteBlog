@@ -7,7 +7,7 @@ namespace SiteBlog.Adapters;
 
 public static class PostAdapter
 {
-    public static List<PostsDto> MapPostsDto(List<Post> posts)
+    public static List<PostsDto> MapPostsDto(List<PostsQueryDto> posts)
     {
         var culture = CultureInfo.CurrentCulture;
 
@@ -17,7 +17,7 @@ public static class PostAdapter
         return MapEnglishPosts(posts);
     }
 
-    private static List<PostsDto> MapPortuguesePosts(List<Post> posts)
+    private static List<PostsDto> MapPortuguesePosts(List<PostsQueryDto> posts)
     {
         return posts.Select(e => new PostsDto
         {
@@ -26,11 +26,12 @@ public static class PostAdapter
             CreatedAt = e.CreatedAt,
             Description = e.PtDescription,
             ImageDisplay = e.ImageDisplay,
+            QuantityComments = e.QuantityComments
         })
         .ToList();
     }
 
-    private static List<PostsDto> MapEnglishPosts(List<Post> posts)
+    private static List<PostsDto> MapEnglishPosts(List<PostsQueryDto> posts)
     {
         return posts.Select(e => new PostsDto
         {
@@ -39,6 +40,7 @@ public static class PostAdapter
             CreatedAt = e.CreatedAt,
             Description = e.EnDescription,
             ImageDisplay = e.ImageDisplay,
+            QuantityComments = e.QuantityComments
         })
         .ToList();
     }
