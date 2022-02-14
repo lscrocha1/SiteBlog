@@ -35,11 +35,12 @@ public class CommentService : ICommentService
     {
         return await _blogContext
             .Posts!
+            .Include(e => e.Comments)
             .Where(e => e.Id == postId)
             .FirstOrDefaultAsync();
     }
 
-    public async Task ReplyComment(int postId, int commentId, AddCommentDto dto)
+    public async Task ReplyComment(int postId, int commentId, ReplyCommentDto dto)
     {
         var post = await GetPostById(postId);
 
@@ -63,6 +64,7 @@ public class CommentService : ICommentService
     {
         return await _blogContext
             .Comments!
+            .Include(e => e.Replies)
             .Where(e => e.Id == commentId)
             .FirstOrDefaultAsync();
     }

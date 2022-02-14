@@ -15,13 +15,15 @@ public static class CommentAdapter
             UserName = addCommentDto.UserName
         };
     }
-    public static Reply MapReply(AddCommentDto addCommentDto)
+
+    public static Reply MapReply(ReplyCommentDto addCommentDto)
     {
         return new Reply
         {
             CreatedAt = DateTime.Now,
             Content = addCommentDto.Content,
-            UserName = addCommentDto.UserName
+            UserName = addCommentDto.UserName,
+            ReplyingToId = addCommentDto.ReplyingToId
         };
     }
 }

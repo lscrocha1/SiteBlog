@@ -1,20 +1,22 @@
-﻿namespace SiteBlog.Dto;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class ReplyDto
+namespace SiteBlog.Dto;
+
+public class ReplyCommentDto
 {
-    public ReplyDto()
+    public ReplyCommentDto()
     {
         UserName = string.Empty;
         Content = string.Empty;
     }
 
-    public int Id { get; set; }
-
+    [Required]
+    [MaxLength(100)]
     public string UserName { get; set; }
 
+    [Required]
+    [MaxLength(1000)]
     public string Content { get; set; }
 
     public int? ReplyingToId { get; set; }
-
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
 }

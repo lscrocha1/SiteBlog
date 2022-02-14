@@ -89,7 +89,8 @@ public static class PostAdapter
                     Id = g.Id,
                     Content = g.Content,
                     UserName = g.UserName,
-                    CreatedAt = g.CreatedAt
+                    CreatedAt = g.CreatedAt,
+                    ReplyingToId = g.ReplyingToId                    
                 })
                 .ToList()
             })
@@ -131,7 +132,8 @@ public static class PostAdapter
                     Id = g.Id,
                     Content = g.Content,
                     UserName = g.UserName,
-                    CreatedAt = g.CreatedAt
+                    CreatedAt = g.CreatedAt,
+                    ReplyingToId = g.ReplyingToId
                 })
                 .ToList()
             })

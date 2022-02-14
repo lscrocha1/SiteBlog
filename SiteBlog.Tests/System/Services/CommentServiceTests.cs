@@ -87,7 +87,7 @@ public class CommentServiceTests
         // Act
         // Assert
         await Assert.ThrowsAsync<NotFoundException>(async () =>
-            await commentService.ReplyComment(99, 99, new AddCommentDto
+            await commentService.ReplyComment(99, 99, new ReplyCommentDto
             {
                 Content = Guid.NewGuid().ToString(),
                 UserName = Guid.NewGuid().ToString()
@@ -111,7 +111,7 @@ public class CommentServiceTests
         // Act
         // Assert
         await Assert.ThrowsAsync<NotFoundException>(async () =>
-            await commentService.ReplyComment(1, 99, new AddCommentDto
+            await commentService.ReplyComment(1, 99, new ReplyCommentDto
             {
                 Content = Guid.NewGuid().ToString(),
                 UserName = Guid.NewGuid().ToString()
@@ -140,7 +140,7 @@ public class CommentServiceTests
         var userName = Guid.NewGuid().ToString();
 
         // Act
-        await commentService.ReplyComment(postId, commentId, new AddCommentDto
+        await commentService.ReplyComment(postId, commentId, new ReplyCommentDto
         {
             Content = content,
             UserName = userName

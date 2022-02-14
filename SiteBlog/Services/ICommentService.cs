@@ -7,5 +7,5 @@ public interface ICommentService
 {
     Task AddComment(int postId, AddCommentDto dto);
 
-    Task ReplyComment(int postId, int commentId, AddCommentDto dto);
+    Task ReplyComment(int postId, int commentId, ReplyCommentDto dto);
 }

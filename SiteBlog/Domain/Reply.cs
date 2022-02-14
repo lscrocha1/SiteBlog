@@ -19,4 +19,6 @@ public class Reply
     public int CommentId { get; set; }
 
     public Comment? Comment { get; set; }
+
+    public int? ReplyingToId { get; set; }
 }

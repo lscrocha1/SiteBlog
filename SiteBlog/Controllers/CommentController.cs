@@ -54,7 +54,7 @@ public class CommentController : ControllerBase
     public async Task<ActionResult> ReplyComment(
         [FromRoute][Required] int postId,
         [FromRoute][Required] int commentId,
-        [FromBody] AddCommentDto dto)
+        [FromBody] ReplyCommentDto dto)
     {
         try
         {

@@ -101,7 +101,7 @@ public class CommentControllerTests
         var controller = new CommentController(mockService.Object);
 
         // Act
-        var result = (StatusCodeResult)await controller.ReplyComment(1, 1, new AddCommentDto());
+        var result = (StatusCodeResult)await controller.ReplyComment(1, 1, new ReplyCommentDto());
 
         // Assert
         result.StatusCode.Should().Be(201);
@@ -116,11 +116,11 @@ public class CommentControllerTests
         var controller = new CommentController(mockService.Object);
 
         // Act
-        var result = await controller.ReplyComment(1, 1, new AddCommentDto());
+        var result = await controller.ReplyComment(1, 1, new ReplyCommentDto());
 
         // Assert
         mockService.Verify(service =>
-            service.ReplyComment(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<AddCommentDto>()),
+            service.ReplyComment(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<ReplyCommentDto>()),
             Times.Once());
     }
 
@@ -131,13 +131,13 @@ public class CommentControllerTests
         var mockService = new Mock<ICommentService>();
 
         mockService
-            .Setup(e => e.ReplyComment(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<AddCommentDto>()))
+            .Setup(e => e.ReplyComment(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<ReplyCommentDto>()))
             .ThrowsAsync(new NotFoundException());
 
         var controller = new CommentController(mockService.Object);
 
         // Act
-        var result = (NotFoundResult)await controller.ReplyComment(1, 1, new AddCommentDto
+        var result = (NotFoundResult)await controller.ReplyComment(1, 1, new ReplyCommentDto
         {
             Content = Guid.NewGuid().ToString(),
             UserName = Guid.NewGuid().ToString()
@@ -154,13 +154,13 @@ public class CommentControllerTests
         var mockService = new Mock<ICommentService>();
 
         mockService
-            .Setup(e => e.ReplyComment(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<AddCommentDto>()))
+            .Setup(e => e.ReplyComment(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<ReplyCommentDto>()))
             .ThrowsAsync(It.IsAny<Exception>());
 
         var controller = new CommentController(mockService.Object);
 
         // Act
-        var result = (StatusCodeResult)await controller.ReplyComment(1, 1, new AddCommentDto
+        var result = (StatusCodeResult)await controller.ReplyComment(1, 1, new ReplyCommentDto
         {
             Content = Guid.NewGuid().ToString(),
             UserName = Guid.NewGuid().ToString()
