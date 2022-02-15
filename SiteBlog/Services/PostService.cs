@@ -73,7 +73,7 @@ public class PostService : IPostService
                 ImageDisplay = e.ImageDisplay,
                 UpdatedAt = e.UpdatedAt,
                 CreatedAt = e.CreatedAt,
-                QuantityComments = e.Comments.Count,
+                QuantityComments = (e.Comments.Count) + (e.Comments.SelectMany(g => g.Replies).Count()),
                 Tags = e.Tags.Select(g => new TagDto
                 {
                     Id = g.TagId,
