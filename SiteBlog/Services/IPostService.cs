@@ -12,4 +12,6 @@ public interface IPostService
         int limit = 10);
 
     Task<PostDto?> GetPost(int postId);
+
+    Task CreatePost(CreatePostDto post);
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SiteBlog.Controllers;
+using SiteBlog.Domain;
 using SiteBlog.Dto;
 using SiteBlog.Services;
 using SiteBlog.Tests.Fixture;
@@ -175,5 +176,36 @@ public class PostControllerTests
         var objectResult = result.Result as NotFoundResult;
 
         objectResult!.StatusCode.Should().Be(404);
+    }
+
+    [Fact]
+    public async Task CreatePost_Should_ReturnStatusCode201()
+    {
+        // Arrange
+        var mockService = new Mock<IPostService>();
+
+        var controller = new PostController(mockService.Object);
+
+        // Act
+        var result = (StatusCodeResult)await controller.CreatePost(null!);
+
+        // Assert
+        result.StatusCode.Should().Be(201);
+    }
+
+    [Fact]
+    public async Task CreatePost_Should_InvokeCreatePost()
+    {
+        // Arrange
+        var mockService = new Mock<IPostService>();
+
+        var controller = new PostController(mockService.Object);
+
+        // Act
+        var result = (StatusCodeResult)await controller.CreatePost(null!);
+
+        // Assert
+        mockService.Verify(service =>
+            service.CreatePost(It.IsAny<Post>()), Times.Once());
     }
 }

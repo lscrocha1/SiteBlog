@@ -48,4 +48,16 @@ public class PostController : ControllerBase
 
         return Ok(post);
     }
+
+    [HttpPost]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ServiceFilter(typeof(BasicAuthenticationAttribute))]
+    public async Task<ActionResult> CreatePost([FromBody] CreatePostDto post)
+    {
+        await _postService.CreatePost(post);
+
+        return StatusCode(201);
+    }
 }

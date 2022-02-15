@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SiteBlog.Adapters;
+using SiteBlog.Domain;
 using SiteBlog.Dto;
 using SiteBlog.Infrastructure.Context;
 
@@ -12,6 +13,49 @@ public class PostService : IPostService
     public PostService(BlogContext blogContext)
     {
         _blogContext = blogContext;
+    }
+
+    public async Task CreatePost(CreatePostDto postDto)
+    {
+        var post = PostAdapter.MapPost(postDto);
+
+        var tagDtos = postDto.Tags;
+
+        if (tagDtos != null && tagDtos.Any())
+        {
+            var tags = new List<Tag>();
+
+            foreach (var tag in tagDtos)
+            {
+                if (!tag.Id.HasValue)
+                {
+                    tags.Add(new Tag
+                    {
+                        Name = tag.Name
+                    });
+                } else
+                {
+                    tags.Add(new Tag
+                    {
+                        Id = tag.Id.Value
+                    });
+                }
+            }
+
+            await _blogContext.AddRangeAsync(tags);
+
+            await _blogContext.SaveChangesAsync();
+
+            post.Tags = tags.Select(e => new PostTag
+            {
+                TagId = e.Id
+            })
+            .ToList();
+        }
+
+        await _blogContext.Posts!.AddAsync(post);
+
+        await _blogContext.SaveChangesAsync();
     }
 
     public async Task<PostDto?> GetPost(int postId)

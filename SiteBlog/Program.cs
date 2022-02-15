@@ -33,6 +33,8 @@ services.AddTransient<ITagService, TagService>();
 
 services.AddSingleton<LocalizationAttribute>();
 
+services.AddSingleton<BasicAuthenticationAttribute>();
+
 const string corsName = "blog-cors-policy";
 
 services.AddCors(opts =>
@@ -65,9 +67,9 @@ app.UseSwaggerUI(opts =>
 var supportedCultures = new[] { Constants.Language.English, Constants.Language.Portuguese };
 
 var localizationOptions = new RequestLocalizationOptions
-    {
-        ApplyCurrentCultureToResponseHeaders = true,
-    }
+{
+    ApplyCurrentCultureToResponseHeaders = true,
+}
     .SetDefaultCulture(supportedCultures[1])
     .AddSupportedCultures(supportedCultures)
     .AddSupportedUICultures();

@@ -17,6 +17,20 @@ public static class PostAdapter
         return MapEnglishPosts(posts);
     }
 
+    public static Post MapPost(CreatePostDto postDto)
+    {
+        return new Post
+        {
+            PtContent = postDto.PtContent,
+            PtTitle = postDto.PtTitle,
+            PtDescription = postDto.PtDescription,
+            EnContent = postDto.EnContent,
+            EnTitle = postDto.EnTitle,
+            EnDescription = postDto.EnDescription,
+            ImageDisplay = postDto.ImageDisplay
+        };
+    }
+
     private static List<PostsDto> MapPortuguesePosts(List<PostsQueryDto> posts)
     {
         return posts.Select(e => new PostsDto
