@@ -26,7 +26,8 @@ public static class PostAdapter
             CreatedAt = e.CreatedAt,
             Description = e.PtDescription,
             ImageDisplay = e.ImageDisplay,
-            QuantityComments = e.QuantityComments
+            QuantityComments = e.QuantityComments,
+            Tags = e.Tags
         })
         .ToList();
     }
@@ -40,7 +41,8 @@ public static class PostAdapter
             CreatedAt = e.CreatedAt,
             Description = e.EnDescription,
             ImageDisplay = e.ImageDisplay,
-            QuantityComments = e.QuantityComments
+            QuantityComments = e.QuantityComments,
+            Tags = e.Tags
         })
         .ToList();
     }
@@ -75,7 +77,7 @@ public static class PostAdapter
             Tags = post.Tags.Select(e => new TagDto
             {
                 Id = e.Id,
-                Name = e.Name
+                Name = e.Tag?.Name ?? string.Empty,
             })
             .ToList(),
             Comments = post.Comments.Select(e => new CommentDto
@@ -118,7 +120,7 @@ public static class PostAdapter
             Tags = post.Tags.Select(e => new TagDto
             {
                 Id = e.Id,
-                Name = e.Name
+                Name = e.Tag?.Name ?? string.Empty,
             })
             .ToList(),
             Comments = post.Comments.Select(e => new CommentDto

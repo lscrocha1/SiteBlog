@@ -11,6 +11,7 @@ public class PostsQueryDto
         ImageDisplay = string.Empty;
         EnContent = string.Empty;
         PtContent = string.Empty;
+        Tags = new List<TagDto>();
     }
 
     public int Id { get; set; }
@@ -34,4 +35,6 @@ public class PostsQueryDto
     public DateTime? UpdatedAt { get; set; }
 
     public int QuantityComments { get; set; }
+
+    public List<TagDto> Tags { get; set; }
 }

@@ -67,6 +67,23 @@ public static class PostFixture
         };
     }
 
+    public static List<Tag> GetTags()
+    {
+        return new List<Tag>
+        {
+            new Tag
+            {
+                Id = 1,
+                Name = Guid.NewGuid().ToString(),
+            },
+            new Tag
+            {
+                Id = 2,
+                Name = Guid.NewGuid().ToString()
+            }
+        };
+    }
+
     public static List<Post> GetPosts()
     {
         return new List<Post>
@@ -106,12 +123,12 @@ public static class PostFixture
                         Link = Guid.NewGuid().ToString()
                     }
                 },
-                Tags = new List<Tag>
+                Tags = new List<PostTag>
                 {
-                    new Tag
+                    new PostTag
                     {
-                        Id = 1,
-                        Name = Guid.NewGuid().ToString()
+                        TagId = 1,
+                        PostId = 1
                     }
                 }
             },
@@ -150,12 +167,12 @@ public static class PostFixture
                         Link = Guid.NewGuid().ToString()
                     }
                 },
-                Tags = new List<Tag>
+                Tags = new List<PostTag>
                 {
-                    new Tag
+                    new PostTag
                     {
-                        Id = 5,
-                        Name = Guid.NewGuid().ToString()
+                        TagId = 2,
+                        PostId = 1
                     }
                 }
             }

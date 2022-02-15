@@ -43,26 +43,4 @@ public class TagControllerTests
         // Assert
         mockService.Verify(service => service.Get(It.IsAny<string?>(), It.IsAny<int>(), It.IsAny<int>()), Times.Once);
     }
-
-    [Fact]
-    public async Task Get_ReturnsTags()
-    {
-        // Arrange
-        var mockService = new Mock<ITagService>();
-
-        mockService
-            .Setup(e => e.Get(It.IsAny<string?>(), It.IsAny<int>(), It.IsAny<int>()))
-            .ReturnsAsync(PostFixture.GetPosts().SelectMany(e => e.Tags).ToList());
-
-        var controller = new TagController(mockService.Object);
-
-        // Act
-        var result = await controller.Get();
-
-        // Assert
-        var objectResult = result.Result as OkObjectResult;
-
-        objectResult!.Value!.Should().NotBeNull();
-        objectResult!.Value!.Should().BeOfType<List<Tag>>();
-    }
 }

@@ -7,6 +7,7 @@ public class PostsDto
         Title = string.Empty;
         Description = string.Empty;
         ImageDisplay = string.Empty;
+        Tags = new List<TagDto>();
     }
 
     public int PostId { get; set; }
@@ -20,4 +21,6 @@ public class PostsDto
     public DateTime CreatedAt { get; set; }
 
     public int QuantityComments { get; set; }
+
+    public List<TagDto> Tags { get; set; }
 }

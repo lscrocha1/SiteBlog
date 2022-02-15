@@ -19,7 +19,7 @@ public class PostService : IPostService
         var result = await _blogContext
             .Posts!
             .AsNoTracking()
-            .Include(e => e.Tags)
+            .Include(e => e.Tags).ThenInclude(e => e.Tag)
             .Include(e => e.Images)
             .Include(e => e.Comments).ThenInclude(e => e.Replies)
             .Where(e => e.Id == postId)
@@ -54,7 +54,7 @@ public class PostService : IPostService
 
         if (tag.HasValue)
         {
-            query = query.Where(e => e.Tags.Select(e => e.Id).Contains(tag.Value));
+            query = query.Where(e => e.Tags.Select(e => e.TagId).Contains(tag.Value));
         }
 
         var result = await query
@@ -73,7 +73,13 @@ public class PostService : IPostService
                 ImageDisplay = e.ImageDisplay,
                 UpdatedAt = e.UpdatedAt,
                 CreatedAt = e.CreatedAt,
-                QuantityComments = e.Comments.Count
+                QuantityComments = e.Comments.Count,
+                Tags = e.Tags.Select(g => new TagDto
+                {
+                    Id = g.TagId,
+                    Name = g.Tag == null ? string.Empty : g.Tag.Name
+                })
+                .ToList(),
             })
             .ToListAsync();
 

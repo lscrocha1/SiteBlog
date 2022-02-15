@@ -11,7 +11,7 @@ public class Post
         ImageDisplay = string.Empty;
         EnContent = string.Empty;
         PtContent = string.Empty;
-        Tags = new List<Tag>();
+        Tags = new List<PostTag>();
         Images = new List<Image>();
         Comments = new List<Comment>();
     }
@@ -36,7 +36,7 @@ public class Post
 
     public DateTime? UpdatedAt { get; set; }
 
-    public IList<Tag> Tags { get; set; }
+    public IList<PostTag> Tags { get; set; }
 
     public IList<Image> Images { get; set; }
 

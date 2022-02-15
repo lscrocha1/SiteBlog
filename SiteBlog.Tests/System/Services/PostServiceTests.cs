@@ -25,6 +25,10 @@ public class PostServiceTests
 
         mockContext.Setup(e => e.Posts).Returns(posts.Object);
 
+        var tagsMock = PostFixture.GetTags().AsQueryable().BuildMockDbSet();
+
+        mockContext.Setup(e => e.Tags).Returns(tagsMock.Object);
+
         var postService = new PostService(mockContext.Object);
 
         // Act
@@ -43,6 +47,10 @@ public class PostServiceTests
         var posts = PostFixture.GetPosts().AsQueryable().BuildMockDbSet();
 
         mockContext.Setup(e => e.Posts).Returns(posts.Object);
+
+        var tagsMock = PostFixture.GetTags().AsQueryable().BuildMockDbSet();
+
+        mockContext.Setup(e => e.Tags).Returns(tagsMock.Object);
 
         var postService = new PostService(mockContext.Object);
 
@@ -93,11 +101,11 @@ public class PostServiceTests
 
         posts.Add(new Post
         {
-            Tags = new List<Tag>
+            Tags = new List<PostTag>
             {
-                new Tag
+                new PostTag
                 {
-                    Id = tagId
+                    TagId = tagId
                 }
             }
         });
@@ -105,6 +113,10 @@ public class PostServiceTests
         var mockSet = posts.AsQueryable().BuildMockDbSet();
 
         mockContext.Setup(e => e.Posts).Returns(mockSet.Object);
+
+        var tagsMock = PostFixture.GetTags().AsQueryable().BuildMockDbSet();
+
+        mockContext.Setup(e => e.Tags).Returns(tagsMock.Object);
 
         var postService = new PostService(mockContext.Object);
 
@@ -159,6 +171,10 @@ public class PostServiceTests
     {
         // Arrange
         var mockContext = new Mock<BlogContext>();
+
+        var tagsMock = PostFixture.GetTags().AsQueryable().BuildMockDbSet();
+
+        mockContext.Setup(e => e.Tags).Returns(tagsMock.Object);
 
         var posts = PostFixture.GetPosts();
 

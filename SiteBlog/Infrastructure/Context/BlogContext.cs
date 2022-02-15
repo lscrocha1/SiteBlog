@@ -17,6 +17,8 @@ public class BlogContext : DbContext
 
     public virtual DbSet<Post>? Posts { get; set; }
 
+    public virtual DbSet<PostTag>? PostTags { get; set; }
+
     public virtual DbSet<Tag>? Tags { get; set; }
 
     public virtual DbSet<Image>? Images { get; set; }
@@ -40,7 +42,7 @@ public class BlogContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
 
             opts.HasMany(e => e.Tags)
-                .WithOne()
+                .WithOne(e => e.Post)
                 .OnDelete(DeleteBehavior.Restrict);
 
             opts.Property(e => e.ImageDisplay).HasMaxLength(500);

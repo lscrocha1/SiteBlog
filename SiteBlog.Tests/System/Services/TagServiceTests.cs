@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using MockQueryable.Moq;
 using Moq;
+using SiteBlog.Domain;
 using SiteBlog.Infrastructure.Context;
 using SiteBlog.Services;
 using SiteBlog.Tests.Fixture;
@@ -23,8 +24,10 @@ public class TagServiceTests
 
         var postMock = posts.BuildMockDbSet();
 
+        var tagsMock = PostFixture.GetTags().AsQueryable().BuildMockDbSet();
+
         mockContext.Setup(e => e.Posts).Returns(postMock.Object);
-        mockContext.Setup(e => e.Tags).Returns(postMock.Object.SelectMany(e => e.Tags).BuildMockDbSet().Object);
+        mockContext.Setup(e => e.Tags).Returns(tagsMock.Object);
 
         var tagService = new TagService(mockContext.Object);
 
@@ -45,8 +48,11 @@ public class TagServiceTests
 
         var postMock = posts.BuildMockDbSet();
 
+        var tagsMock = PostFixture.GetTags().AsQueryable().BuildMockDbSet();
+
+        mockContext.Setup(e => e.Tags).Returns(tagsMock.Object);
+
         mockContext.Setup(e => e.Posts).Returns(postMock.Object);
-        mockContext.Setup(e => e.Tags).Returns(postMock.Object.SelectMany(e => e.Tags).BuildMockDbSet().Object);
 
         var tagService = new TagService(mockContext.Object);
 
@@ -68,16 +74,19 @@ public class TagServiceTests
 
         var tagName = Guid.NewGuid().ToString();
 
-        posts.ToList().FirstOrDefault()!.Tags.Add(new Domain.Tag
+        var postMock = posts.BuildMockDbSet();
+
+        var tagList = PostFixture.GetTags();
+
+        tagList.Add(new Tag
         {
-            Id = 2,
             Name = tagName
         });
 
-        var postMock = posts.BuildMockDbSet();
+        var tagsMock = tagList.AsQueryable().BuildMockDbSet();
 
         mockContext.Setup(e => e.Posts).Returns(postMock.Object);
-        mockContext.Setup(e => e.Tags).Returns(postMock.Object.SelectMany(e => e.Tags).BuildMockDbSet().Object);
+        mockContext.Setup(e => e.Tags).Returns(tagsMock.Object);
 
         var tagService = new TagService(mockContext.Object);
 
