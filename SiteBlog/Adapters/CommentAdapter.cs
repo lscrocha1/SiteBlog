@@ -1,16 +1,15 @@
-﻿using SiteBlog.Domain;
+﻿using MongoDB.Bson;
+using SiteBlog.Domain;
 using SiteBlog.Dto;
 
 namespace SiteBlog.Adapters;
 
 public static class CommentAdapter
 {
-    public static Comment MapComment(AddCommentDto addCommentDto, int postId)
+    public static Comment MapComment(AddCommentDto addCommentDto)
     {
         return new Comment
-        {
-            PostId = postId,
-            CreatedAt = DateTime.Now,
+        { 
             Content = addCommentDto.Content,
             UserName = addCommentDto.UserName
         };
@@ -20,7 +19,6 @@ public static class CommentAdapter
     {
         return new Reply
         {
-            CreatedAt = DateTime.Now,
             Content = addCommentDto.Content,
             UserName = addCommentDto.UserName,
             ReplyingToId = addCommentDto.ReplyingToId

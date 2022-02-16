@@ -1,4 +1,6 @@
-﻿namespace SiteBlog.Domain;
+﻿using MongoDB.Bson;
+
+namespace SiteBlog.Domain;
 
 public class Image
 {
@@ -7,11 +9,7 @@ public class Image
         Link = string.Empty;
     }
 
-    public int Id { get; set; }
+    public ObjectId Id { get; set; }
 
     public string Link { get; set; }
-
-    public int PostId { get; set; }
-
-    public Post? Post { get; set; }
 }

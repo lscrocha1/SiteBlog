@@ -69,113 +69,11 @@ public static class PostFixture
 
     public static List<Tag> GetTags()
     {
-        return new List<Tag>
-        {
-            new Tag
-            {
-                Id = 1,
-                Name = Guid.NewGuid().ToString(),
-            },
-            new Tag
-            {
-                Id = 2,
-                Name = Guid.NewGuid().ToString()
-            }
-        };
+        return null!;
     }
 
     public static List<Post> GetPosts()
     {
-        return new List<Post>
-        {
-            new Post
-            {
-                Id = 1,
-                Comments = new List<Comment>
-                {
-                    new Comment
-                    {
-                        Id = 1,
-                        Content = Guid.NewGuid().ToString(),
-                        UserName = Guid.NewGuid().ToString(),
-                        Replies = new List<Reply>
-                        {
-                            new Reply
-                            {
-                                Content = Guid.NewGuid().ToString(),
-                                UserName = Guid.NewGuid().ToString(),
-                            }
-                        }
-                    }
-                },
-                EnDescription = Guid.NewGuid().ToString(),
-                PtDescription = Guid.NewGuid().ToString(),
-                EnContent = Guid.NewGuid().ToString(),
-                ImageDisplay = Guid.NewGuid().ToString(),
-                PtContent = Guid.NewGuid().ToString(),
-                PtTitle = Guid.NewGuid().ToString(),
-                EnTitle = Guid.NewGuid().ToString(),
-                Images = new List<Image>
-                {
-                    new Image
-                    {
-                        Id = 1,
-                        Link = Guid.NewGuid().ToString()
-                    }
-                },
-                Tags = new List<PostTag>
-                {
-                    new PostTag
-                    {
-                        TagId = 1,
-                        PostId = 1
-                    }
-                }
-            },
-            new Post
-            {
-                Id = 3,
-                Comments = new List<Comment>
-                {
-                    new Comment
-                    {
-                        Id = 3,
-                        Content = Guid.NewGuid().ToString(),
-                        UserName = Guid.NewGuid().ToString(),
-                        Replies = new List<Reply>
-                        {
-                            new Reply
-                            {
-                                Content = Guid.NewGuid().ToString(),
-                                UserName = Guid.NewGuid().ToString(),
-                            }
-                        }
-                    }
-                },
-                PtDescription = Guid.NewGuid().ToString(),
-                EnDescription = Guid.NewGuid().ToString(),
-                EnContent = Guid.NewGuid().ToString(),
-                ImageDisplay = Guid.NewGuid().ToString(),
-                PtContent = Guid.NewGuid().ToString(),
-                EnTitle = Guid.NewGuid().ToString(),
-                PtTitle = Guid.NewGuid().ToString(),
-                Images = new List<Image>
-                {
-                    new Image
-                    {
-                        Id = 4,
-                        Link = Guid.NewGuid().ToString()
-                    }
-                },
-                Tags = new List<PostTag>
-                {
-                    new PostTag
-                    {
-                        TagId = 2,
-                        PostId = 1
-                    }
-                }
-            }
-        };
+        return null!;
     }
 }

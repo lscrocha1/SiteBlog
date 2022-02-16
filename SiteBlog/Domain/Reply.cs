@@ -1,4 +1,6 @@
-﻿namespace SiteBlog.Domain;
+﻿using MongoDB.Bson;
+
+namespace SiteBlog.Domain;
 
 public class Reply
 {
@@ -8,17 +10,15 @@ public class Reply
         Content = string.Empty;
     }
 
-    public int Id { get; set; }
+    public ObjectId Id { get; set; }
 
     public string UserName { get; set; }
 
     public string Content { get; set; }
 
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime CreatedAt => DateTime.Now;
 
-    public int CommentId { get; set; }
+    public ObjectId? ReplyingToId { get; set; }
 
-    public Comment? Comment { get; set; }
-
-    public int? ReplyingToId { get; set; }
+    public bool Approved { get; set; }
 }

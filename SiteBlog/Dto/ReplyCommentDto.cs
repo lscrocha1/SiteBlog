@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MongoDB.Bson;
+using System.ComponentModel.DataAnnotations;
 
 namespace SiteBlog.Dto;
 
@@ -18,5 +19,5 @@ public class ReplyCommentDto
     [MaxLength(1000)]
     public string Content { get; set; }
 
-    public int? ReplyingToId { get; set; }
+    public ObjectId? ReplyingToId { get; set; }
 }

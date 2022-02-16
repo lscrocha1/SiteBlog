@@ -1,4 +1,6 @@
-﻿namespace SiteBlog.Domain;
+﻿using MongoDB.Bson;
+
+namespace SiteBlog.Domain;
 
 public class Tag
 {
@@ -7,7 +9,7 @@ public class Tag
         Name = string.Empty;
     }
 
-    public int Id { get; set; }
+    public ObjectId Id { get; set; }
 
     public string Name { get; set; }
 }

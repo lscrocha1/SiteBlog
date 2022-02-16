@@ -1,9 +1,6 @@
 ﻿using FluentAssertions;
-using MockQueryable.Moq;
-using Moq;
-using SiteBlog.Domain;
+using MongoDB.Bson;
 using SiteBlog.Dto;
-using SiteBlog.Infrastructure.Context;
 using SiteBlog.Infrastructure.Exceptions;
 using SiteBlog.Services;
 using SiteBlog.Tests.Fixture;
@@ -20,13 +17,7 @@ public class CommentServiceTests
     public async Task AddComment_Should_ThrowException_If_NotFound_PostWithGivenPostId()
     {
         // Arrange
-        var mockContext = new Mock<BlogContext>();
-
-        var posts = PostFixture.GetPosts().AsQueryable().BuildMockDbSet();
-
-        mockContext.Setup(e => e.Posts).Returns(posts.Object);
-
-        var commentService = new CommentService(mockContext.Object);
+        var commentService = new CommentService();
 
         // Act
         // Assert
@@ -42,23 +33,16 @@ public class CommentServiceTests
     public async Task AddComment_Should_AddComment_IntoPost_ByPostGivenId()
     {
         // Arrange
-        var mockContext = new Mock<BlogContext>();
-
         var posts = PostFixture.GetPosts().AsQueryable();
 
-        var postMock = posts.BuildMockDbSet();
+        var commentService = new CommentService();
 
-        mockContext.Setup(e => e.Posts).Returns(postMock.Object);
-        mockContext.Setup(e => e.Comments).Returns(postMock.Object.SelectMany(e => e.Comments).BuildMockDbSet().Object);
-
-        var commentService = new CommentService(mockContext.Object);
-
-        var postId = 1;
+        var postId = new ObjectId();
         var content = Guid.NewGuid().ToString();
         var userName = Guid.NewGuid().ToString();
 
         // Act
-        await commentService.AddComment(postId, new AddCommentDto
+        await commentService.AddComment(1, new AddCommentDto
         {
             Content = content,
             UserName = userName
@@ -76,13 +60,7 @@ public class CommentServiceTests
     public async Task ReplyComment_Should_ThrowException_If_NotFound_PostWithGivenPostId()
     {
         // Arrange
-        var mockContext = new Mock<BlogContext>();
-
-        var posts = PostFixture.GetPosts().AsQueryable().BuildMockDbSet();
-
-        mockContext.Setup(e => e.Posts).Returns(posts.Object);
-
-        var commentService = new CommentService(mockContext.Object);
+        var commentService = new CommentService();
 
         // Act
         // Assert
@@ -98,15 +76,7 @@ public class CommentServiceTests
     public async Task ReplyComment_Should_ThrowException_If_NotFound_CommentWithGivenPostId()
     {
         // Arrange
-        var mockContext = new Mock<BlogContext>();
-
-        var posts = PostFixture.GetPosts().AsQueryable().BuildMockDbSet();
-
-        mockContext.Setup(e => e.Posts).Returns(posts.Object);
-        mockContext.Setup(e => e.Comments).Returns(posts.Object.SelectMany(e => e.Comments).BuildMockDbSet().Object);
-        mockContext.Setup(e => e.Replies).Returns(posts.Object.SelectMany(e => e.Comments).SelectMany(e => e.Replies).BuildMockDbSet().Object);
-
-        var commentService = new CommentService(mockContext.Object);
+        var commentService = new CommentService();
 
         // Act
         // Assert
@@ -122,25 +92,17 @@ public class CommentServiceTests
     public async Task ReplyComment_Should_AddComment_IntoPost_ByPostGivenId()
     {
         // Arrange
-        var mockContext = new Mock<BlogContext>();
-
         var posts = PostFixture.GetPosts().AsQueryable();
 
-        var postMock = posts.BuildMockDbSet();
+        var commentService = new CommentService();
 
-        mockContext.Setup(e => e.Posts).Returns(postMock.Object);
-        mockContext.Setup(e => e.Comments).Returns(postMock.Object.SelectMany(e => e.Comments).BuildMockDbSet().Object);
-        mockContext.Setup(e => e.Replies).Returns(postMock.Object.SelectMany(e => e.Comments).SelectMany(e => e.Replies).BuildMockDbSet().Object);
-
-        var commentService = new CommentService(mockContext.Object);
-
-        var postId = 1;
+        var postId = new ObjectId();
         var commentId = 1;
         var content = Guid.NewGuid().ToString();
         var userName = Guid.NewGuid().ToString();
 
         // Act
-        await commentService.ReplyComment(postId, commentId, new ReplyCommentDto
+        await commentService.ReplyComment(1, commentId, new ReplyCommentDto
         {
             Content = content,
             UserName = userName
