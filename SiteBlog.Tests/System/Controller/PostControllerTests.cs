@@ -206,6 +206,6 @@ public class PostControllerTests
 
         // Assert
         mockService.Verify(service =>
-            service.CreatePost(It.IsAny<Post>()), Times.Once());
+            service.CreatePost(It.IsAny<CreatePostDto>()), Times.Once());
     }
 }
