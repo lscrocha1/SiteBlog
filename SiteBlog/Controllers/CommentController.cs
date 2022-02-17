@@ -27,7 +27,7 @@ public class CommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> AddComment(
-        [FromRoute][Required] ObjectId postId,
+        [FromRoute][Required] string postId,
         [FromBody] AddCommentDto dto,
         CancellationToken cancellationToken)
     {
@@ -54,8 +54,8 @@ public class CommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> ReplyComment(
-        [FromRoute][Required] ObjectId postId,
-        [FromRoute][Required] ObjectId commentId,
+        [FromRoute][Required] string postId,
+        [FromRoute][Required] string commentId,
         [FromBody] ReplyCommentDto dto,
         CancellationToken cancellationToken)
     {

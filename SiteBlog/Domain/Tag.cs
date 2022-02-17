@@ -6,10 +6,11 @@ public class Tag
 {
     public Tag()
     {
+        Id = ObjectId.GenerateNewId().ToString();
         Name = string.Empty;
     }
 
-    public ObjectId Id { get; set; }
+    public string Id { get; set; }
 
     public string Name { get; set; }
 }

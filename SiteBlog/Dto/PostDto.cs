@@ -7,6 +7,7 @@ public class PostDto
 {
     public PostDto()
     {
+        Id = string.Empty;
         Title = string.Empty;
         Description = string.Empty;
         ImageDisplay = string.Empty;
@@ -16,7 +17,7 @@ public class PostDto
         Comments = new List<CommentDto>();
     }
 
-    public ObjectId Id { get; set; }
+    public string Id { get; set; }
 
     public string Title { get; set; }
 

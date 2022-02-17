@@ -6,12 +6,13 @@ public class Content
 {
     public Content()
     {
+        Id = ObjectId.GenerateNewId().ToString();
         Title = string.Empty;
         Body = string.Empty;
         Description = string.Empty;
     }
 
-    public ObjectId Id { get; set; }
+    public string Id { get; set; }
 
     public string Title { get; set; }
 

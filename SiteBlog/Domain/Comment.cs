@@ -6,12 +6,13 @@ public class Comment
 {
     public Comment()
     {
+        Id = ObjectId.GenerateNewId().ToString();
         UserName = string.Empty;
         Content = string.Empty;
         Replies = new List<Reply>();
     }
 
-    public ObjectId Id { get; set; }
+    public string Id { get; set; }
 
     public string UserName { get; set; }
 

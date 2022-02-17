@@ -31,13 +31,13 @@ public static class PostFixture
         {
             new Post
             {
-                Id = new ObjectId(),
+                Id = string.Empty,
                 Comments = new List<Comment>
                 {
                     new Comment
                     {
                         Approved = true,
-                        Id = new ObjectId(),
+                        Id = string.Empty,
                         Content = string.Empty,
                         UserName = string.Empty,
                         Replies = new List<Reply>
@@ -45,7 +45,7 @@ public static class PostFixture
                             new Reply
                             {
                                 Approved = true,
-                                Id = new ObjectId(),
+                                Id = string.Empty,
                                 Content = string.Empty,
                                 UserName = string.Empty,
                             }
@@ -58,7 +58,7 @@ public static class PostFixture
                     {
                         Body = string.Empty,
                         Description = string.Empty,
-                        Id = new ObjectId(),
+                        Id = string.Empty,
                         Language = PostContentLanguageEnum.English,
                         Title = "post"
                     },
@@ -66,7 +66,7 @@ public static class PostFixture
                     {
                         Body = string.Empty,
                         Description = string.Empty,
-                        Id = new ObjectId(),
+                        Id = string.Empty,
                         Language = PostContentLanguageEnum.Portuguese,
                         Title = string.Empty
                     }
@@ -78,7 +78,7 @@ public static class PostFixture
                 {
                     new Image
                     {
-                        Id = new ObjectId(),
+                        Id = string.Empty,
                         Link = string.Empty,
                         Type = PostDisplayTypeEnum.Image
                     }
@@ -87,7 +87,7 @@ public static class PostFixture
                 {
                     new Tag
                     {
-                        Id = new ObjectId(),
+                        Id = string.Empty,
                         Name = string.Empty
                     }
                 }
@@ -99,7 +99,7 @@ public static class PostFixture
     {
         return new PostDto
         {
-            Id = new ObjectId(),
+            Id = string.Empty,
             Comments = new List<CommentDto>
             {
                 new CommentDto

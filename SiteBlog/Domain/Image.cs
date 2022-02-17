@@ -6,10 +6,11 @@ public class Image
 {
     public Image()
     {
+        Id = ObjectId.GenerateNewId().ToString();
         Link = string.Empty;
     }
 
-    public ObjectId Id { get; set; }
+    public string Id { get; set; }
 
     public string Link { get; set; }
 

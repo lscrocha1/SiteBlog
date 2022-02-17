@@ -19,5 +19,5 @@ public class ReplyCommentDto
     [MaxLength(1000)]
     public string Content { get; set; }
 
-    public ObjectId? ReplyingToId { get; set; }
+    public string? ReplyingToId { get; set; }
 }

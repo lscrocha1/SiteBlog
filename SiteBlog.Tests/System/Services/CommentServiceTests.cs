@@ -29,7 +29,7 @@ public class CommentServiceTests
         // Act
         // Assert
         await Assert.ThrowsAsync<NotFoundException>(async () =>
-            await commentService.AddComment(new ObjectId(), new AddCommentDto
+            await commentService.AddComment(string.Empty, new AddCommentDto
             {
                 Content = Guid.NewGuid().ToString(),
                 UserName = Guid.NewGuid().ToString()
@@ -49,7 +49,7 @@ public class CommentServiceTests
         // Act
         // Assert
         await Assert.ThrowsAsync<NotFoundException>(async () =>
-            await commentService.ReplyComment(new ObjectId(), new ObjectId(), new ReplyCommentDto
+            await commentService.ReplyComment(string.Empty, string.Empty, new ReplyCommentDto
             {
                 Content = Guid.NewGuid().ToString(),
                 UserName = Guid.NewGuid().ToString()
@@ -69,7 +69,7 @@ public class CommentServiceTests
         // Act
         // Assert
         await Assert.ThrowsAsync<NotFoundException>(async () =>
-            await commentService.ReplyComment(new ObjectId(), new ObjectId(), new ReplyCommentDto
+            await commentService.ReplyComment(string.Empty, string.Empty, new ReplyCommentDto
             {
                 Content = Guid.NewGuid().ToString(),
                 UserName = Guid.NewGuid().ToString()

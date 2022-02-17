@@ -6,6 +6,7 @@ public class Post
 {
     public Post()
     {
+        Id = ObjectId.GenerateNewId().ToString();
         Display = string.Empty;
         Contents = new List<Content>();
         Images = new List<Image>();
@@ -13,7 +14,7 @@ public class Post
         Comments = new List<Comment>();
     }
 
-    public ObjectId Id { get; set; }
+    public string Id { get; set; }
 
     public PostDisplayTypeEnum DisplayType { get; set; }
 

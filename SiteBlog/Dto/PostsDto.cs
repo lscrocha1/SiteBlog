@@ -6,13 +6,14 @@ public class PostsDto
 {
     public PostsDto()
     {
+        PostId = string.Empty;
         Title = string.Empty;
         Description = string.Empty;
         ImageDisplay = string.Empty;
         Tags = new List<TagDto>();
     }
 
-    public ObjectId PostId { get; set; }
+    public string PostId { get; set; }
 
     public string Title { get; set; }
 

@@ -6,7 +6,7 @@ namespace SiteBlog.Services;
 
 public interface ICommentService
 {
-    Task AddComment(ObjectId postId, AddCommentDto dto, CancellationToken cancellationToken);
+    Task AddComment(string postId, AddCommentDto dto, CancellationToken cancellationToken);
 
-    Task ReplyComment(ObjectId postId, ObjectId commentId, ReplyCommentDto dto, CancellationToken cancellationToken);
+    Task ReplyComment(string postId, string commentId, ReplyCommentDto dto, CancellationToken cancellationToken);
 }

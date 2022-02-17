@@ -20,7 +20,7 @@ public class CommentService : ICommentService
         _mongoRepository = mongoRepository;
     }
 
-    public async Task AddComment(ObjectId postId, AddCommentDto dto, CancellationToken cancellationToken)
+    public async Task AddComment(string postId, AddCommentDto dto, CancellationToken cancellationToken)
     {
         try
         {
@@ -52,8 +52,8 @@ public class CommentService : ICommentService
     }
 
     public async Task ReplyComment(
-        ObjectId postId, 
-        ObjectId commentId, 
+        string postId, 
+        string commentId, 
         ReplyCommentDto dto, 
         CancellationToken cancellationToken)
     {

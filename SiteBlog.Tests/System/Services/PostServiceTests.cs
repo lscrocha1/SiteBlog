@@ -107,7 +107,7 @@ public class PostServiceTests
         var result = await postService.GetPosts(cancellationToken, page: 1, limit: 10);
 
         // Assert
-        var post = result.FirstOrDefault(e => e.Id == new ObjectId());
+        var post = result.FirstOrDefault(e => e.Id == string.Empty);
 
         post.Should().NotBeNull();
 

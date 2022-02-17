@@ -6,17 +6,18 @@ public class ReplyDto
 {
     public ReplyDto()
     {
+        Id = string.Empty;
         UserName = string.Empty;
         Content = string.Empty;
     }
 
-    public ObjectId Id { get; set; }
+    public string Id { get; set; }
 
     public string UserName { get; set; }
 
     public string Content { get; set; }
 
-    public ObjectId? ReplyingToId { get; set; }
+    public string? ReplyingToId { get; set; }
 
     public DateTime CreatedAt { get; set; }
 }
