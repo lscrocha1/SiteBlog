@@ -1,7 +1,10 @@
 ﻿using FluentAssertions;
 using MongoDB.Bson;
+using Moq;
+using SiteBlog.Domain;
 using SiteBlog.Dto;
 using SiteBlog.Infrastructure.Exceptions;
+using SiteBlog.Repositories.Mongo;
 using SiteBlog.Services;
 using SiteBlog.Tests.Fixture;
 using System;
@@ -17,103 +20,59 @@ public class CommentServiceTests
     public async Task AddComment_Should_ThrowException_If_NotFound_PostWithGivenPostId()
     {
         // Arrange
-        var commentService = new CommentService();
+        var mockRepository = new Mock<IMongoRepository<Post>>();
+
+        var cancellationToken = PostFixture.GetCancellationToken();
+
+        var commentService = new CommentService(PostFixture.GetLogger<CommentService>(), mockRepository.Object);
 
         // Act
         // Assert
         await Assert.ThrowsAsync<NotFoundException>(async () =>
-            await commentService.AddComment(99, new AddCommentDto
+            await commentService.AddComment(new ObjectId(), new AddCommentDto
             {
                 Content = Guid.NewGuid().ToString(),
                 UserName = Guid.NewGuid().ToString()
-            }));
-    }
-
-    [Fact]
-    public async Task AddComment_Should_AddComment_IntoPost_ByPostGivenId()
-    {
-        // Arrange
-        var posts = PostFixture.GetPosts().AsQueryable();
-
-        var commentService = new CommentService();
-
-        var postId = new ObjectId();
-        var content = Guid.NewGuid().ToString();
-        var userName = Guid.NewGuid().ToString();
-
-        // Act
-        await commentService.AddComment(1, new AddCommentDto
-        {
-            Content = content,
-            UserName = userName
-        });
-
-        // Assert 
-        posts
-            .Where(e => e.Id == postId)
-            .SelectMany(e => e.Comments)
-            .Should()
-            .Contain(e => e.Content == content && e.UserName == userName);
+            }, cancellationToken));
     }
 
     [Fact]
     public async Task ReplyComment_Should_ThrowException_If_NotFound_PostWithGivenPostId()
     {
         // Arrange
-        var commentService = new CommentService();
+        var mockRepository = new Mock<IMongoRepository<Post>>();
+
+        var cancellationToken = PostFixture.GetCancellationToken();
+
+        var commentService = new CommentService(PostFixture.GetLogger<CommentService>(), mockRepository.Object);
 
         // Act
         // Assert
         await Assert.ThrowsAsync<NotFoundException>(async () =>
-            await commentService.ReplyComment(99, 99, new ReplyCommentDto
+            await commentService.ReplyComment(new ObjectId(), new ObjectId(), new ReplyCommentDto
             {
                 Content = Guid.NewGuid().ToString(),
                 UserName = Guid.NewGuid().ToString()
-            }));
+            }, cancellationToken));
     }
 
     [Fact]
     public async Task ReplyComment_Should_ThrowException_If_NotFound_CommentWithGivenPostId()
     {
         // Arrange
-        var commentService = new CommentService();
+        var mockRepository = new Mock<IMongoRepository<Post>>();
+
+        var cancellationToken = PostFixture.GetCancellationToken();
+
+        var commentService = new CommentService(PostFixture.GetLogger<CommentService>(), mockRepository.Object);
 
         // Act
         // Assert
         await Assert.ThrowsAsync<NotFoundException>(async () =>
-            await commentService.ReplyComment(1, 99, new ReplyCommentDto
+            await commentService.ReplyComment(new ObjectId(), new ObjectId(), new ReplyCommentDto
             {
                 Content = Guid.NewGuid().ToString(),
                 UserName = Guid.NewGuid().ToString()
-            }));
-    }
-
-    [Fact]
-    public async Task ReplyComment_Should_AddComment_IntoPost_ByPostGivenId()
-    {
-        // Arrange
-        var posts = PostFixture.GetPosts().AsQueryable();
-
-        var commentService = new CommentService();
-
-        var postId = new ObjectId();
-        var commentId = 1;
-        var content = Guid.NewGuid().ToString();
-        var userName = Guid.NewGuid().ToString();
-
-        // Act
-        await commentService.ReplyComment(1, commentId, new ReplyCommentDto
-        {
-            Content = content,
-            UserName = userName
-        });
-
-        // Assert 
-        posts
-            .Where(e => e.Id == postId)
-            .SelectMany(e => e.Comments)
-            .SelectMany(e => e.Replies)
-            .Should()
-            .Contain(e => e.Content == content && e.UserName == userName);
+            }, cancellationToken));
     }
 }

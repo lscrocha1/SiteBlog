@@ -1,7 +1,10 @@
-﻿using SiteBlog.Adapters;
+﻿using MongoDB.Driver;
+using SiteBlog.Adapters;
 using SiteBlog.Domain;
 using SiteBlog.Dto;
+using SiteBlog.Helpers;
 using SiteBlog.Repositories.Mongo;
+using System.Web;
 
 namespace SiteBlog.Services;
 
@@ -40,17 +43,79 @@ public class PostService : IPostService
         }
     }
 
-    public async Task<PostDto?> GetPost(int postId)
+    public async Task<PostDto?> GetPost(string postTitle, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _logger.LogInformation($"Getting post with title {postTitle}");
+
+            var title = HttpUtility.UrlDecode(postTitle);
+
+            var filter = Helper.GetQueryFilter<Post>(
+                post => post.Contents.Any(e => e.Title.ToLower() == title.ToLower()));
+
+            var post = await _mongoRepository.GetAsync(filter, cancellationToken);
+
+            if (post is null)
+                return null;
+
+            _logger.LogInformation($"Found post with id {post.Id}");
+
+            return PostAdapter.MapPostDto(post);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"An error happend while getting a post. Error: {ex.Message}");
+
+            throw;
+        }
     }
 
-    public async Task<List<PostsDto>> GetPosts(
+    public async Task<List<Post>> GetPosts(
+        CancellationToken cancellationToken,
         string? search = null,
-        int? tag = null,
+        string? tag = null,
         int page = 1,
         int limit = 10)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var filter = GetFilter(search, tag);
+
+            return await _mongoRepository.GetAsync(filter, cancellationToken, page, limit);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"An error happend while getting a list of post. Error: {ex.Message}");
+
+            throw;
+        }
+    }
+
+    private static FilterDefinition<Post> GetFilter(string? search = null, string? tag = null)
+    {
+        var filter = Builders<Post>.Filter;
+
+        var filterResult = filter.Empty;
+
+        if (!string.IsNullOrEmpty(search))
+        {
+            search = search.Trim().ToLower();
+
+            filterResult &= filter.Where(e =>
+                e.Contents.Select(g => g.Description).Contains(search)
+                || e.Contents.Select(g => g.Title.ToLower()).Contains(search)
+                || e.Contents.Select(g => g.Body.ToLower()).Contains(search)
+                || e.Tags.Select(g => g.Name.ToLower()).Contains(search));
+        }
+
+        if (!string.IsNullOrEmpty(tag))
+        {
+            tag = tag.Trim().ToLower();
+
+            filterResult &= filter.Where(e => e.Tags.Select(g => g.Name.ToLower()).Contains(tag));
+        }
+
+        return filterResult;
     }
 }

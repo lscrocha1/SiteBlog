@@ -1,4 +1,6 @@
-﻿namespace SiteBlog.Dto;
+﻿using MongoDB.Bson;
+
+namespace SiteBlog.Dto;
 
 public class PostsDto
 {
@@ -10,7 +12,7 @@ public class PostsDto
         Tags = new List<TagDto>();
     }
 
-    public int PostId { get; set; }
+    public ObjectId PostId { get; set; }
 
     public string Title { get; set; }
 

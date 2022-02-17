@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
 using Moq;
 using SiteBlog.Domain;
 using SiteBlog.Dto;
@@ -24,25 +25,72 @@ public static class PostFixture
         return cancellationTokenSource.Token;
     }
 
-    public static List<PostsDto> GetListPostDtos()
+    public static List<Post> GetPosts()
     {
-        return new List<PostsDto>
+        return new List<Post>
         {
-            new PostsDto
+            new Post
             {
-                PostId = 1,
-                CreatedAt = DateTime.Now,
-                Description = Guid.NewGuid().ToString(),
-                ImageDisplay = Guid.NewGuid().ToString(),
-                Title = Guid.NewGuid().ToString()
-            },
-            new PostsDto
-            {
-                PostId = 2,
-                CreatedAt = DateTime.Now,
-                Description = Guid.NewGuid().ToString(),
-                ImageDisplay = Guid.NewGuid().ToString(),
-                Title = Guid.NewGuid().ToString(),
+                Id = new ObjectId(),
+                Comments = new List<Comment>
+                {
+                    new Comment
+                    {
+                        Approved = true,
+                        Id = new ObjectId(),
+                        Content = string.Empty,
+                        UserName = string.Empty,
+                        Replies = new List<Reply>
+                        {
+                            new Reply
+                            {
+                                Approved = true,
+                                Id = new ObjectId(),
+                                Content = string.Empty,
+                                UserName = string.Empty,
+                            }
+                        }
+                    }
+                },
+                Contents = new List<Content>
+                {
+                    new Content
+                    {
+                        Body = string.Empty,
+                        Description = string.Empty,
+                        Id = new ObjectId(),
+                        Language = PostContentLanguageEnum.English,
+                        Title = "post"
+                    },
+                    new Content
+                    {
+                        Body = string.Empty,
+                        Description = string.Empty,
+                        Id = new ObjectId(),
+                        Language = PostContentLanguageEnum.Portuguese,
+                        Title = string.Empty
+                    }
+                },
+                Display = string.Empty,
+                DisplayType = PostDisplayTypeEnum.Image,
+                UpdatedAt = DateTime.Now,
+                Images = new List<Image>
+                {
+                    new Image
+                    {
+                        Id = new ObjectId(),
+                        Link = string.Empty,
+                        Type = PostDisplayTypeEnum.Image
+                    }
+                },
+                Tags = new List<Tag>
+                {
+                    new Tag
+                    {
+                        Id = new ObjectId(),
+                        Name = string.Empty
+                    }
+                }
             }
         };
     }
@@ -51,7 +99,7 @@ public static class PostFixture
     {
         return new PostDto
         {
-            Id = 1,
+            Id = new ObjectId(),
             Comments = new List<CommentDto>
             {
                 new CommentDto
@@ -79,15 +127,5 @@ public static class PostFixture
                 }
             }
         };
-    }
-
-    public static List<Tag> GetTags()
-    {
-        return null!;
-    }
-
-    public static List<Post> GetPosts()
-    {
-        return null!;
     }
 }

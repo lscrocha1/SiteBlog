@@ -1,9 +1,13 @@
 ﻿using FluentAssertions;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using Moq;
 using SiteBlog.Domain;
 using SiteBlog.Repositories.Mongo;
 using SiteBlog.Services;
 using SiteBlog.Tests.Fixture;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -18,10 +22,19 @@ public class PostServiceTests
         // Arrange
         var mockRepository = new Mock<IMongoRepository<Post>>();
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
+        mockRepository.Setup(e => e.GetAsync(
+            It.IsAny<FilterDefinition<Post>>(), 
+            cancellationToken, 
+            It.IsAny<int>(), 
+            It.IsAny<int>()))
+            .ReturnsAsync(PostFixture.GetPosts());
+
         var postService = new PostService(PostFixture.GetLogger<PostService>(), mockRepository.Object);
 
         // Act
-        var result = await postService.GetPosts();
+        var result = await postService.GetPosts(cancellationToken);
 
         // Assert
         result.Should().NotBeNullOrEmpty();
@@ -33,42 +46,19 @@ public class PostServiceTests
         // Arrange
         var mockRepository = new Mock<IMongoRepository<Post>>();
 
-        var postService = new PostService(PostFixture.GetLogger<PostService>(), mockRepository.Object);
+        var cancellationToken = PostFixture.GetCancellationToken();
 
-        // Act
-        var result = await postService.GetPosts(page: 1, limit: 1);
-
-        // Assert
-        result.Should().NotBeNullOrEmpty();
-        result.Should().HaveCount(1);
-    }
-
-    [Fact]
-    public async Task GetPosts_ReturnsFilteredResult()
-    {
-        // Arrange
-        var mockRepository = new Mock<IMongoRepository<Post>>();
+        mockRepository.Setup(e => e.GetAsync(
+            It.IsAny<FilterDefinition<Post>>(),
+            cancellationToken,
+            It.IsAny<int>(),
+            It.IsAny<int>()))
+            .ReturnsAsync(PostFixture.GetPosts());
 
         var postService = new PostService(PostFixture.GetLogger<PostService>(), mockRepository.Object);
 
         // Act
-        var result = await postService.GetPosts(search: "Experience", null, page: 1, limit: 10);
-
-        // Assert
-        result.Should().NotBeNullOrEmpty();
-        result.Should().HaveCount(1);
-    }
-
-    [Fact]
-    public async Task GetPosts_ReturnsFilteredByTagResult()
-    {
-        // Arrange
-        var mockRepository = new Mock<IMongoRepository<Post>>();
-
-        var postService = new PostService(PostFixture.GetLogger<PostService>(), mockRepository.Object);
-
-        // Act
-        var result = await postService.GetPosts(tag: 1, page: 1, limit: 10);
+        var result = await postService.GetPosts(cancellationToken, page: 1, limit: 1);
 
         // Assert
         result.Should().NotBeNullOrEmpty();
@@ -81,28 +71,19 @@ public class PostServiceTests
         // Arrange
         var mockRepository = new Mock<IMongoRepository<Post>>();
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
+        mockRepository
+            .Setup(e => e.GetAsync(It.IsAny<FilterDefinition<Post>>(), cancellationToken))
+            .ReturnsAsync(PostFixture.GetPosts().FirstOrDefault());
+
         var postService = new PostService(PostFixture.GetLogger<PostService>(), mockRepository.Object);
 
         // Act
-        var result = await postService.GetPost(1);
+        var result = await postService.GetPost("post", cancellationToken);
 
         // Assert
         result.Should().NotBeNull();
-    }
-
-    [Fact]
-    public async Task GetPost_ReturnNull_IfNotFound()
-    {
-        // Arrange
-        var mockRepository = new Mock<IMongoRepository<Post>>();
-
-        var postService = new PostService(PostFixture.GetLogger<PostService>(), mockRepository.Object);
-
-        // Act
-        var result = await postService.GetPost(99);
-
-        // Assert
-        result.Should().BeNull();
     }
 
     [Fact]
@@ -111,16 +92,25 @@ public class PostServiceTests
         // Arrange
         var mockRepository = new Mock<IMongoRepository<Post>>();
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
+        mockRepository.Setup(e => e.GetAsync(
+            It.IsAny<FilterDefinition<Post>>(),
+            cancellationToken,
+            It.IsAny<int>(),
+            It.IsAny<int>()))
+            .ReturnsAsync(PostFixture.GetPosts());
+
         var postService = new PostService(PostFixture.GetLogger<PostService>(), mockRepository.Object);
 
         // Act
-        var result = await postService.GetPosts(page: 1, limit: 10);
+        var result = await postService.GetPosts(cancellationToken, page: 1, limit: 10);
 
         // Assert
-        var post = result.FirstOrDefault(e => e.PostId == 1);
+        var post = result.FirstOrDefault(e => e.Id == new ObjectId());
 
         post.Should().NotBeNull();
 
-        post!.QuantityComments.Should().Be(2);
+        post!.Comments.Count.Should().Be(1);
     }
 }

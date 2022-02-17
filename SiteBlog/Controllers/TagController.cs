@@ -19,13 +19,22 @@ public class TagController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<List<Tag>>> Get(
+        CancellationToken cancellationToken,
         [FromQuery] string? search = null,
         [FromQuery] int page = 1,
         [FromQuery] int limit = 10)
     {
-        var tags = await _tagService.Get(search, page, limit);
+        try
+        {
+            var tags = await _tagService.Get(cancellationToken, search, page, limit);
 
-        return Ok(tags);
+            return Ok(tags);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500);
+        }
     }
 }

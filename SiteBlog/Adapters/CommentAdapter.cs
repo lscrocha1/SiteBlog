@@ -10,8 +10,9 @@ public static class CommentAdapter
     {
         return new Comment
         { 
+            Approved = false,
             Content = addCommentDto.Content,
-            UserName = addCommentDto.UserName
+            UserName = addCommentDto.UserName,
         };
     }
 
@@ -19,6 +20,7 @@ public static class CommentAdapter
     {
         return new Reply
         {
+            Approved = false,
             Content = addCommentDto.Content,
             UserName = addCommentDto.UserName,
             ReplyingToId = addCommentDto.ReplyingToId

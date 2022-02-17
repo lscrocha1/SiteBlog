@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using SiteBlog.Dto;
 using SiteBlog.Infrastructure.Attributes;
 using SiteBlog.Infrastructure.Exceptions;
@@ -26,12 +27,13 @@ public class CommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> AddComment(
-        [FromRoute][Required] int postId,
-        [FromBody] AddCommentDto dto)
+        [FromRoute][Required] ObjectId postId,
+        [FromBody] AddCommentDto dto,
+        CancellationToken cancellationToken)
     {
         try
         {
-            await _commentService.AddComment(postId, dto);
+            await _commentService.AddComment(postId, dto, cancellationToken);
 
             return StatusCode(201);
         }
@@ -52,13 +54,14 @@ public class CommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> ReplyComment(
-        [FromRoute][Required] int postId,
-        [FromRoute][Required] int commentId,
-        [FromBody] ReplyCommentDto dto)
+        [FromRoute][Required] ObjectId postId,
+        [FromRoute][Required] ObjectId commentId,
+        [FromBody] ReplyCommentDto dto,
+        CancellationToken cancellationToken)
     {
         try
         {
-            await _commentService.ReplyComment(postId, commentId, dto);
+            await _commentService.ReplyComment(postId, commentId, dto, cancellationToken);
 
             return StatusCode(201);
         }

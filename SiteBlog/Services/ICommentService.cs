@@ -1,11 +1,12 @@
-﻿using SiteBlog.Domain;
+﻿using MongoDB.Bson;
+using SiteBlog.Domain;
 using SiteBlog.Dto;
 
 namespace SiteBlog.Services;
 
 public interface ICommentService
 {
-    Task AddComment(int postId, AddCommentDto dto);
+    Task AddComment(ObjectId postId, AddCommentDto dto, CancellationToken cancellationToken);
 
-    Task ReplyComment(int postId, int commentId, ReplyCommentDto dto);
+    Task ReplyComment(ObjectId postId, ObjectId commentId, ReplyCommentDto dto, CancellationToken cancellationToken);
 }

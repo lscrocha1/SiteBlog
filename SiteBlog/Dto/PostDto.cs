@@ -1,4 +1,7 @@
-﻿namespace SiteBlog.Dto;
+﻿using MongoDB.Bson;
+using SiteBlog.Domain;
+
+namespace SiteBlog.Dto;
 
 public class PostDto
 {
@@ -13,13 +16,15 @@ public class PostDto
         Comments = new List<CommentDto>();
     }
 
-    public int Id { get; set; }
+    public ObjectId Id { get; set; }
 
     public string Title { get; set; }
 
     public string Description { get; set; }
 
     public string ImageDisplay { get; set; }
+
+    public PostDisplayTypeEnum DisplayType { get; set; }
 
     public string Content { get; set; }
 

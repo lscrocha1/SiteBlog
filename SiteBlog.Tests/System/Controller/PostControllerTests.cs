@@ -6,6 +6,7 @@ using SiteBlog.Domain;
 using SiteBlog.Dto;
 using SiteBlog.Services;
 using SiteBlog.Tests.Fixture;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,14 +22,16 @@ public class PostControllerTests
         // Arrange
         var mockService = new Mock<IPostService>();
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         mockService
-            .Setup(service => service.GetPosts(null, null, 1, 10))
-            .ReturnsAsync(PostFixture.GetListPostDtos());
+            .Setup(service => service.GetPosts(cancellationToken, null, null, 1, 10))
+            .ReturnsAsync(PostFixture.GetPosts());
 
         var controller = new PostController(mockService.Object);
 
         // Act
-        var result = await controller.GetPosts();
+        var result = await controller.GetPosts(cancellationToken);
 
         // Assert
         (result.Result as OkObjectResult)!.StatusCode.Should().Be(200);
@@ -40,18 +43,20 @@ public class PostControllerTests
         // Arrange
         var mockService = new Mock<IPostService>();
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         mockService
-            .Setup(service => service.GetPosts(null, null, 1, 10))
-            .ReturnsAsync(PostFixture.GetListPostDtos());
+            .Setup(service => service.GetPosts(cancellationToken, null, null, 1, 10))
+            .ReturnsAsync(PostFixture.GetPosts());
 
         var controller = new PostController(mockService.Object);
 
         // Act
-        var result = await controller.GetPosts();
+        var result = await controller.GetPosts(cancellationToken);
 
         // Assert
         mockService.Verify(
-            service => service.GetPosts(null, null, 1, 10),
+            service => service.GetPosts(cancellationToken, null, null, 1, 10),
             Times.Once());
     }
 
@@ -61,14 +66,16 @@ public class PostControllerTests
         // Arrange
         var mockService = new Mock<IPostService>();
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         mockService
-            .Setup(service => service.GetPosts(null, null, 1, 10))
-            .ReturnsAsync(PostFixture.GetListPostDtos());
+            .Setup(service => service.GetPosts(cancellationToken, null, null, 1, 10))
+            .ReturnsAsync(PostFixture.GetPosts());
 
         var controller = new PostController(mockService.Object);
 
         // Act
-        var result = await controller.GetPosts();
+        var result = await controller.GetPosts(cancellationToken);
 
         // Assert
         (result.Result as OkObjectResult)!.Value.Should().NotBeNull();
@@ -80,14 +87,16 @@ public class PostControllerTests
         // Arrange
         var mockService = new Mock<IPostService>();
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         mockService
-            .Setup(service => service.GetPosts(null, null, 1, 10))
-            .ReturnsAsync(new List<PostsDto>());
+            .Setup(service => service.GetPosts(cancellationToken, null, null, 1, 10))
+            .ReturnsAsync(new List<Post>());
 
         var controller = new PostController(mockService.Object);
 
         // Act
-        var result = await controller.GetPosts();
+        var result = await controller.GetPosts(cancellationToken);
 
         // Assert
         result.Result.Should().BeOfType<NotFoundResult>();
@@ -103,14 +112,16 @@ public class PostControllerTests
         // Arrange
         var mockService = new Mock<IPostService>();
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         mockService
-            .Setup(service => service.GetPost(It.IsAny<int>()))
+            .Setup(service => service.GetPost(It.IsAny<string>(), cancellationToken))
             .ReturnsAsync(PostFixture.GetPostDto());
 
         var controller = new PostController(mockService.Object);
 
         // Act
-        var result = await controller.GetPost(1);
+        var result = await controller.GetPost(Guid.NewGuid().ToString(), cancellationToken);
 
         // Assert
         (result.Result as OkObjectResult)!.StatusCode.Should().Be(200);
@@ -122,18 +133,20 @@ public class PostControllerTests
         // Arrange
         var mockService = new Mock<IPostService>();
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         mockService
-            .Setup(service => service.GetPost(It.IsAny<int>()))
+            .Setup(service => service.GetPost(It.IsAny<string>(), cancellationToken))
             .ReturnsAsync(PostFixture.GetPostDto());
 
         var controller = new PostController(mockService.Object);
 
         // Act
-        var result = await controller.GetPost(1);
+        var result = await controller.GetPost(Guid.NewGuid().ToString(), cancellationToken);
 
         // Assert
         mockService.Verify(service =>
-            service.GetPost(It.IsAny<int>()),
+            service.GetPost(It.IsAny<string>(), cancellationToken),
             Times.Once);
     }
 
@@ -143,14 +156,16 @@ public class PostControllerTests
         // Arrange
         var mockService = new Mock<IPostService>();
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         mockService
-            .Setup(service => service.GetPost(It.IsAny<int>()))
+            .Setup(service => service.GetPost(It.IsAny<string>(), cancellationToken))
             .ReturnsAsync(PostFixture.GetPostDto());
 
         var controller = new PostController(mockService.Object);
 
         // Act
-        var result = await controller.GetPost(1);
+        var result = await controller.GetPost(Guid.NewGuid().ToString(), cancellationToken);
 
         // Assert
         (result.Result as OkObjectResult)!.Value.Should().NotBeNull();
@@ -162,14 +177,16 @@ public class PostControllerTests
         // Arrange
         var mockService = new Mock<IPostService>();
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         mockService
-            .Setup(service => service.GetPost(It.IsAny<int>()))
+            .Setup(service => service.GetPost(It.IsAny<string>(), cancellationToken))
             .ReturnsAsync((PostDto)null!);
 
         var controller = new PostController(mockService.Object);
 
         // Act
-        var result = await controller.GetPost(99);
+        var result = await controller.GetPost(Guid.NewGuid().ToString(), cancellationToken);
 
         // Assert
         result.Result.Should().BeOfType<NotFoundResult>();

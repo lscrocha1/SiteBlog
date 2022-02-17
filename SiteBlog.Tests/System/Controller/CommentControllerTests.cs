@@ -1,11 +1,13 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using Moq;
 using SiteBlog.Controllers;
 using SiteBlog.Domain;
 using SiteBlog.Dto;
 using SiteBlog.Infrastructure.Exceptions;
 using SiteBlog.Services;
+using SiteBlog.Tests.Fixture;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -22,8 +24,10 @@ public class CommentControllerTests
 
         var controller = new CommentController(mockService.Object);
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         // Act
-        var result = (StatusCodeResult)await controller.AddComment(1, new AddCommentDto());
+        var result = (StatusCodeResult)await controller.AddComment(new ObjectId(), new AddCommentDto(), cancellationToken);
 
         // Assert
         result.StatusCode.Should().Be(201);
@@ -37,12 +41,14 @@ public class CommentControllerTests
 
         var controller = new CommentController(mockService.Object);
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         // Act
-        var result = await controller.AddComment(1, new AddCommentDto());
+        var result = await controller.AddComment(new ObjectId(), new AddCommentDto(), cancellationToken);
 
         // Assert
         mockService.Verify(service => 
-            service.AddComment(It.IsAny<int>(), It.IsAny<AddCommentDto>()), 
+            service.AddComment(It.IsAny<ObjectId>(), It.IsAny<AddCommentDto>(), cancellationToken), 
             Times.Once());
     }
 
@@ -52,18 +58,20 @@ public class CommentControllerTests
         // Arrange
         var mockService = new Mock<ICommentService>();
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         mockService
-            .Setup(e => e.AddComment(It.IsAny<int>(), It.IsAny<AddCommentDto>()))
+            .Setup(e => e.AddComment(It.IsAny<ObjectId>(), It.IsAny<AddCommentDto>(), cancellationToken))
             .ThrowsAsync(new NotFoundException());
 
         var controller = new CommentController(mockService.Object);
 
         // Act
-        var result = (NotFoundResult)await controller.AddComment(1, new AddCommentDto
+        var result = (NotFoundResult)await controller.AddComment(new ObjectId(), new AddCommentDto
         {
             Content = Guid.NewGuid().ToString(),
             UserName = Guid.NewGuid().ToString()
-        });
+        }, cancellationToken);
 
         // Assert
         result.StatusCode.Should().Be(404);
@@ -75,18 +83,20 @@ public class CommentControllerTests
         // Arrange
         var mockService = new Mock<ICommentService>();
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         mockService
-            .Setup(e => e.AddComment(It.IsAny<int>(), It.IsAny<AddCommentDto>()))
+            .Setup(e => e.AddComment(It.IsAny<ObjectId>(), It.IsAny<AddCommentDto>(), cancellationToken))
             .ThrowsAsync(It.IsAny<Exception>());
 
         var controller = new CommentController(mockService.Object);
 
         // Act
-        var result = (StatusCodeResult)await controller.AddComment(1, new AddCommentDto
+        var result = (StatusCodeResult)await controller.AddComment(new ObjectId(), new AddCommentDto
         {
             Content = Guid.NewGuid().ToString(),
             UserName = Guid.NewGuid().ToString()
-        });
+        }, cancellationToken);
 
         // Assert
         result.StatusCode.Should().Be(500);
@@ -100,8 +110,10 @@ public class CommentControllerTests
 
         var controller = new CommentController(mockService.Object);
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         // Act
-        var result = (StatusCodeResult)await controller.ReplyComment(1, 1, new ReplyCommentDto());
+        var result = (StatusCodeResult)await controller.ReplyComment(new ObjectId(), new ObjectId(), new ReplyCommentDto(), cancellationToken);
 
         // Assert
         result.StatusCode.Should().Be(201);
@@ -115,12 +127,14 @@ public class CommentControllerTests
 
         var controller = new CommentController(mockService.Object);
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         // Act
-        var result = await controller.ReplyComment(1, 1, new ReplyCommentDto());
+        var result = await controller.ReplyComment(new ObjectId(), new ObjectId(), new ReplyCommentDto(), cancellationToken);
 
         // Assert
         mockService.Verify(service =>
-            service.ReplyComment(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<ReplyCommentDto>()),
+            service.ReplyComment(It.IsAny<ObjectId>(), It.IsAny<ObjectId>(), It.IsAny<ReplyCommentDto>(), cancellationToken),
             Times.Once());
     }
 
@@ -130,18 +144,20 @@ public class CommentControllerTests
         // Arrange
         var mockService = new Mock<ICommentService>();
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         mockService
-            .Setup(e => e.ReplyComment(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<ReplyCommentDto>()))
+            .Setup(e => e.ReplyComment(It.IsAny<ObjectId>(), It.IsAny<ObjectId>(), It.IsAny<ReplyCommentDto>(), cancellationToken))
             .ThrowsAsync(new NotFoundException());
 
         var controller = new CommentController(mockService.Object);
 
         // Act
-        var result = (NotFoundResult)await controller.ReplyComment(1, 1, new ReplyCommentDto
+        var result = (NotFoundResult)await controller.ReplyComment(new ObjectId(), new ObjectId(), new ReplyCommentDto
         {
             Content = Guid.NewGuid().ToString(),
             UserName = Guid.NewGuid().ToString()
-        });
+        }, cancellationToken);
 
         // Assert
         result.StatusCode.Should().Be(404);
@@ -153,18 +169,20 @@ public class CommentControllerTests
         // Arrange
         var mockService = new Mock<ICommentService>();
 
+        var cancellationToken = PostFixture.GetCancellationToken();
+
         mockService
-            .Setup(e => e.ReplyComment(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<ReplyCommentDto>()))
+            .Setup(e => e.ReplyComment(It.IsAny<ObjectId>(), It.IsAny<ObjectId>(), It.IsAny<ReplyCommentDto>(), cancellationToken))
             .ThrowsAsync(It.IsAny<Exception>());
 
         var controller = new CommentController(mockService.Object);
 
         // Act
-        var result = (StatusCodeResult)await controller.ReplyComment(1, 1, new ReplyCommentDto
+        var result = (StatusCodeResult)await controller.ReplyComment(new ObjectId(), new ObjectId(), new ReplyCommentDto
         {
             Content = Guid.NewGuid().ToString(),
             UserName = Guid.NewGuid().ToString()
-        });
+        }, cancellationToken);
 
         // Assert
         result.StatusCode.Should().Be(500);

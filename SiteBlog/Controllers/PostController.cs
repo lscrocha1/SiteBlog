@@ -21,43 +21,68 @@ public class PostController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<List<PostsDto>>> GetPosts(
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<List<Post>>> GetPosts(
+        CancellationToken cancellationToken,
         [FromQuery] string? search = null,
-        [FromQuery] int? tag = null,
+        [FromQuery] string? tag = null,
         [FromQuery] int page = 1,
         [FromQuery] int limit = 10)
     {
-        var posts = await _postService.GetPosts(search, tag, page, limit);
+        try
+        {
+            var posts = await _postService.GetPosts(cancellationToken, search, tag, page, limit);
 
-        if (posts is null || !posts.Any())
-            return NotFound();
+            if (posts is null || !posts.Any())
+                return NotFound();
 
-        return Ok(posts);
+            return Ok(posts);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500);
+        }
     }
 
     [HttpGet]
-    [Route("{id}")]
+    [Route("{title}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PostDto>> GetPost([FromRoute] int id)
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<PostDto>> GetPost([FromRoute] string title, CancellationToken cancellationToken)
     {
-        var post = await _postService.GetPost(id);
+        try
+        {
+            var post = await _postService.GetPost(title, cancellationToken);
 
-        if (post is null)
-            return NotFound();
+            if (post is null)
+                return NotFound();
 
-        return Ok(post);
+            return Ok(post);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500);
+        }
     }
 
     [HttpPost]
     [ApiExplorerSettings(IgnoreApi = true)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ServiceFilter(typeof(BasicAuthenticationAttribute))]
     public async Task<ActionResult> CreatePost([FromBody] CreatePostDto post, CancellationToken cancellationToken)
     {
-        await _postService.CreatePost(post, cancellationToken);
+        try
+        {
+            await _postService.CreatePost(post, cancellationToken);
 
-        return StatusCode(201);
+            return StatusCode(201);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500);
+        }
     }
 }

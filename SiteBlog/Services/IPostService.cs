@@ -5,13 +5,14 @@ namespace SiteBlog.Services;
 
 public interface IPostService
 {
-    Task<List<PostsDto>> GetPosts(
+    Task<List<Post>> GetPosts(
+        CancellationToken cancellationToken,
         string? search = null,
-        int? tag = null,
+        string? tag = null,
         int page = 1, 
         int limit = 10);
 
-    Task<PostDto?> GetPost(int postId);
+    Task<PostDto?> GetPost(string postTitle, CancellationToken cancellationToken);
 
     Task CreatePost(CreatePostDto post, CancellationToken cancellationToken);
 }

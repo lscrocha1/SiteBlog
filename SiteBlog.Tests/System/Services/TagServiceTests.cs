@@ -1,4 +1,7 @@
 ﻿using FluentAssertions;
+using MongoDB.Driver;
+using Moq;
+using SiteBlog.Repositories.Mongo;
 using SiteBlog.Services;
 using SiteBlog.Tests.Fixture;
 using System;
@@ -14,12 +17,21 @@ public class TagServiceTests
     public async Task Get_ReturnsTags()
     {
         // Arrange
-        var posts = PostFixture.GetPosts().AsQueryable();
+        var mockRepository = new Mock<IMongoRepository<Domain.Tag>>();
 
-        var tagService = new TagService();
+        var cancellationToken = PostFixture.GetCancellationToken();
+
+        mockRepository.Setup(e => e.GetAsync(
+            It.IsAny<FilterDefinition<Domain.Tag>>(),
+            cancellationToken,
+            It.IsAny<int>(),
+            It.IsAny<int>()))
+            .ReturnsAsync(PostFixture.GetPosts().SelectMany(e => e.Tags).ToList());
+
+        var tagService = new TagService(PostFixture.GetLogger<TagService>(), mockRepository.Object);
 
         // Act
-        var tags = await tagService.Get();
+        var tags = await tagService.Get(cancellationToken);
 
         // Assert
         tags.Should().NotBeNullOrEmpty();
@@ -29,12 +41,21 @@ public class TagServiceTests
     public async Task Get_ReturnsTagsPaginated()
     {
         // Arrange
-        var posts = PostFixture.GetPosts().AsQueryable();
+        var mockRepository = new Mock<IMongoRepository<Domain.Tag>>();
 
-        var tagService = new TagService();
+        var cancellationToken = PostFixture.GetCancellationToken();
+
+        mockRepository.Setup(e => e.GetAsync(
+            It.IsAny<FilterDefinition<Domain.Tag>>(),
+            cancellationToken,
+            It.IsAny<int>(),
+            It.IsAny<int>()))
+            .ReturnsAsync(PostFixture.GetPosts().SelectMany(e => e.Tags).ToList());
+
+        var tagService = new TagService(PostFixture.GetLogger<TagService>(), mockRepository.Object);
 
         // Act
-        var tags = await tagService.Get(page: 1, limit: 1);
+        var tags = await tagService.Get(cancellationToken, page: 1, limit: 1);
 
         // Assert
         tags.Should().NotBeNullOrEmpty();
@@ -45,10 +66,21 @@ public class TagServiceTests
     public async Task Get_ReturnsTagsFilteredBySearch()
     {
         // Arrange
-        var tagService = new TagService();
+        var mockRepository = new Mock<IMongoRepository<Domain.Tag>>();
+
+        var cancellationToken = PostFixture.GetCancellationToken();
+
+        mockRepository.Setup(e => e.GetAsync(
+            It.IsAny<FilterDefinition<Domain.Tag>>(),
+            cancellationToken,
+            It.IsAny<int>(),
+            It.IsAny<int>()))
+            .ReturnsAsync(PostFixture.GetPosts().SelectMany(e => e.Tags).ToList());
+
+        var tagService = new TagService(PostFixture.GetLogger<TagService>(), mockRepository.Object);
 
         // Act
-        var tags = await tagService.Get(search: Guid.NewGuid().ToString());
+        var tags = await tagService.Get(cancellationToken, search: Guid.NewGuid().ToString());
 
         // Assert
         tags.Should().NotBeNullOrEmpty();
