@@ -1,12 +1,29 @@
-﻿using SiteBlog.Domain;
+﻿using Microsoft.Extensions.Logging;
+using Moq;
+using SiteBlog.Domain;
 using SiteBlog.Dto;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace SiteBlog.Tests.Fixture;
 
 public static class PostFixture
 {
+    public static ILogger<T> GetLogger<T>()
+    {
+        var mockLogger = new Mock<ILogger<T>>();
+
+        return mockLogger.Object;
+    }
+
+    public static CancellationToken GetCancellationToken()
+    {
+        var cancellationTokenSource = new CancellationTokenSource();
+
+        return cancellationTokenSource.Token;
+    }
+
     public static List<PostsDto> GetListPostDtos()
     {
         return new List<PostsDto>
@@ -39,7 +56,6 @@ public static class PostFixture
             {
                 new CommentDto
                 {
-                    Id = 1,
                     Content = Guid.NewGuid().ToString(),
                     UserName = Guid.NewGuid().ToString()
                 }
@@ -52,7 +68,6 @@ public static class PostFixture
             {
                 new ImageDto
                 {
-                    Id = 1,
                     Link = Guid.NewGuid().ToString()
                 }
             },
@@ -60,7 +75,6 @@ public static class PostFixture
             {
                 new TagDto
                 {
-                    Id = 1,
                     Name = Guid.NewGuid().ToString()
                 }
             }

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SiteBlog.Domain;
 
 namespace SiteBlog.Dto;
 
@@ -6,37 +6,19 @@ public class CreatePostDto
 {
     public CreatePostDto()
     {
-        EnTitle = string.Empty;
-        PtTitle = string.Empty;
-        PtDescription = string.Empty;
-        EnDescription = string.Empty;
-        ImageDisplay = string.Empty;
-        EnContent = string.Empty;
-        PtContent = string.Empty;
-        Tags = new List<CreatePostTagDto>();
+        Display = string.Empty;
+        Contents = new List<ContentDto>();
+        Images = new List<ImageDto>();
+        Tags = new List<TagDto>();
     }
 
-    [Required]
-    public string EnTitle { get; set; }
+    public PostDisplayTypeEnum DisplayType { get; set; }
 
-    [Required]
-    public string PtTitle { get; set; }
+    public string Display { get; set; }
 
-    [Required]
-    public string EnDescription { get; set; }
+    public List<ContentDto> Contents { get; set; }
 
-    [Required]
-    public string PtDescription { get; set; }
+    public List<ImageDto> Images { get; set; }
 
-    [Required]
-    public string ImageDisplay { get; set; }
-
-    [Required]
-    public string EnContent { get; set; }
-
-    [Required]
-    public string PtContent { get; set; }
-
-    [Required]
-    public List<CreatePostTagDto> Tags { get; set; }
+    public List<TagDto> Tags { get; set; }
 }

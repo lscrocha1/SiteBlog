@@ -7,6 +7,7 @@ using SiteBlog.Dto;
 using SiteBlog.Services;
 using SiteBlog.Tests.Fixture;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -187,7 +188,7 @@ public class PostControllerTests
         var controller = new PostController(mockService.Object);
 
         // Act
-        var result = (StatusCodeResult)await controller.CreatePost(null!);
+        var result = (StatusCodeResult)await controller.CreatePost(null!, PostFixture.GetCancellationToken());
 
         // Assert
         result.StatusCode.Should().Be(201);
@@ -202,10 +203,10 @@ public class PostControllerTests
         var controller = new PostController(mockService.Object);
 
         // Act
-        var result = (StatusCodeResult)await controller.CreatePost(null!);
+        var result = (StatusCodeResult)await controller.CreatePost(null!, PostFixture.GetCancellationToken()!);
 
         // Assert
         mockService.Verify(service =>
-            service.CreatePost(It.IsAny<CreatePostDto>()), Times.Once());
+            service.CreatePost(It.IsAny<CreatePostDto>(), It.IsAny<CancellationToken>()), Times.Once());
     }
 }

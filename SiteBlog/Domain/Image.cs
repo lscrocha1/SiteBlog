@@ -12,4 +12,6 @@ public class Image
     public ObjectId Id { get; set; }
 
     public string Link { get; set; }
+
+    public PostDisplayTypeEnum Type { get; set; }
 }

@@ -1,4 +1,6 @@
-﻿namespace SiteBlog.Dto;
+﻿using SiteBlog.Domain;
+
+namespace SiteBlog.Dto;
 
 public class ImageDto
 {
@@ -7,7 +9,7 @@ public class ImageDto
         Link = string.Empty;
     }
 
-    public int Id { get; set; }
-
     public string Link { get; set; }
+
+    public PostDisplayTypeEnum Type { get; set; }
 }

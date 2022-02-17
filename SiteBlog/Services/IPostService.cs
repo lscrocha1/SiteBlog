@@ -13,5 +13,5 @@ public interface IPostService
 
     Task<PostDto?> GetPost(int postId);
 
-    Task CreatePost(CreatePostDto post);
+    Task CreatePost(CreatePostDto post, CancellationToken cancellationToken);
 }

@@ -54,9 +54,9 @@ public class PostController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ServiceFilter(typeof(BasicAuthenticationAttribute))]
-    public async Task<ActionResult> CreatePost([FromBody] CreatePostDto post)
+    public async Task<ActionResult> CreatePost([FromBody] CreatePostDto post, CancellationToken cancellationToken)
     {
-        await _postService.CreatePost(post);
+        await _postService.CreatePost(post, cancellationToken);
 
         return StatusCode(201);
     }

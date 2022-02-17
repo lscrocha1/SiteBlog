@@ -2,7 +2,10 @@
 
 public class TagDto
 {
-    public int Id { get; set; }
+    public TagDto()
+    {
+        Name = string.Empty;
+    }
 
-    public string? Name { get; set; }
+    public string Name { get; set; }
 }

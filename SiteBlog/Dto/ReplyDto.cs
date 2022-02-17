@@ -1,4 +1,6 @@
-﻿namespace SiteBlog.Dto;
+﻿using MongoDB.Bson;
+
+namespace SiteBlog.Dto;
 
 public class ReplyDto
 {
@@ -8,13 +10,13 @@ public class ReplyDto
         Content = string.Empty;
     }
 
-    public int Id { get; set; }
+    public ObjectId Id { get; set; }
 
     public string UserName { get; set; }
 
     public string Content { get; set; }
 
-    public int? ReplyingToId { get; set; }
+    public ObjectId? ReplyingToId { get; set; }
 
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime CreatedAt { get; set; }
 }

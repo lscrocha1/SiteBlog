@@ -1,5 +1,9 @@
 ﻿using FluentAssertions;
+using Moq;
+using SiteBlog.Domain;
+using SiteBlog.Repositories.Mongo;
 using SiteBlog.Services;
+using SiteBlog.Tests.Fixture;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -12,7 +16,9 @@ public class PostServiceTests
     public async Task GetPosts_ReturnsListOfPosts()
     {
         // Arrange
-        var postService = new PostService();
+        var mockRepository = new Mock<IMongoRepository<Post>>();
+
+        var postService = new PostService(PostFixture.GetLogger<PostService>(), mockRepository.Object);
 
         // Act
         var result = await postService.GetPosts();
@@ -25,7 +31,9 @@ public class PostServiceTests
     public async Task GetPosts_ReturnsListOfPostsPaginated()
     {
         // Arrange
-        var postService = new PostService();
+        var mockRepository = new Mock<IMongoRepository<Post>>();
+
+        var postService = new PostService(PostFixture.GetLogger<PostService>(), mockRepository.Object);
 
         // Act
         var result = await postService.GetPosts(page: 1, limit: 1);
@@ -39,7 +47,9 @@ public class PostServiceTests
     public async Task GetPosts_ReturnsFilteredResult()
     {
         // Arrange
-        var postService = new PostService();
+        var mockRepository = new Mock<IMongoRepository<Post>>();
+
+        var postService = new PostService(PostFixture.GetLogger<PostService>(), mockRepository.Object);
 
         // Act
         var result = await postService.GetPosts(search: "Experience", null, page: 1, limit: 10);
@@ -53,7 +63,9 @@ public class PostServiceTests
     public async Task GetPosts_ReturnsFilteredByTagResult()
     {
         // Arrange
-        var postService = new PostService();
+        var mockRepository = new Mock<IMongoRepository<Post>>();
+
+        var postService = new PostService(PostFixture.GetLogger<PostService>(), mockRepository.Object);
 
         // Act
         var result = await postService.GetPosts(tag: 1, page: 1, limit: 10);
@@ -67,7 +79,9 @@ public class PostServiceTests
     public async Task GetPost_ReturnSinglePost()
     {
         // Arrange
-        var postService = new PostService();
+        var mockRepository = new Mock<IMongoRepository<Post>>();
+
+        var postService = new PostService(PostFixture.GetLogger<PostService>(), mockRepository.Object);
 
         // Act
         var result = await postService.GetPost(1);
@@ -80,7 +94,9 @@ public class PostServiceTests
     public async Task GetPost_ReturnNull_IfNotFound()
     {
         // Arrange
-        var postService = new PostService();
+        var mockRepository = new Mock<IMongoRepository<Post>>();
+
+        var postService = new PostService(PostFixture.GetLogger<PostService>(), mockRepository.Object);
 
         // Act
         var result = await postService.GetPost(99);
@@ -93,7 +109,9 @@ public class PostServiceTests
     public async Task GetPosts_ReturnsTheCorrectCommentQuantity()
     {
         // Arrange
-        var postService = new PostService();
+        var mockRepository = new Mock<IMongoRepository<Post>>();
+
+        var postService = new PostService(PostFixture.GetLogger<PostService>(), mockRepository.Object);
 
         // Act
         var result = await postService.GetPosts(page: 1, limit: 10);

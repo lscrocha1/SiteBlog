@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+using SiteBlog.Configuration;
 using SiteBlog.Infrastructure.Attributes;
 using SiteBlog.Infrastructure.Constants;
 using SiteBlog.Repositories.Mongo;
@@ -26,6 +28,10 @@ services.AddSingleton(typeof(IMongoRepository<>), typeof(MongoRepository<>));
 services.AddSingleton<LocalizationAttribute>();
 
 services.AddSingleton<BasicAuthenticationAttribute>();
+
+services.Configure<MongoConfiguration>(configuration.GetSection("MongoConfiguration"));
+
+services.AddSingleton(provider => provider.GetRequiredService<IOptions<MongoConfiguration>>().Value);
 
 const string corsName = "blog-cors-policy";
 
