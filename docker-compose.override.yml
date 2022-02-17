@@ -1,12 +1,13 @@
 version: '3.4'
 
 services:
-  db:
+  mongo:
+    restart: always
     environment:
-      SA_PASSWORD: "blog@2022"
-      ACCEPT_EULA: "Y"
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
     ports:
-      - "14331:1433"
+      - "27017:27017"
 
   siteblog:
     environment:
