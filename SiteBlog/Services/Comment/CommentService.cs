@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿namespace SiteBlog.Services.Comment;
+
 using MongoDB.Driver;
 using SiteBlog.Adapters;
 using SiteBlog.Domain;
@@ -6,8 +7,6 @@ using SiteBlog.Dto;
 using SiteBlog.Helpers;
 using SiteBlog.Infrastructure.Exceptions;
 using SiteBlog.Repositories.Mongo;
-
-namespace SiteBlog.Services;
 
 public class CommentService : ICommentService
 {
@@ -52,9 +51,9 @@ public class CommentService : ICommentService
     }
 
     public async Task ReplyComment(
-        string postId, 
-        string commentId, 
-        ReplyCommentDto dto, 
+        string postId,
+        string commentId,
+        ReplyCommentDto dto,
         CancellationToken cancellationToken)
     {
         try

@@ -1,6 +1,6 @@
-﻿using SiteBlog.Domain;
+﻿namespace SiteBlog.Services.Tag;
 
-namespace SiteBlog.Services;
+using SiteBlog.Domain;
 
 public interface ITagService
 {

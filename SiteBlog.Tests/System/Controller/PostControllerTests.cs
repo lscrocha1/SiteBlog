@@ -4,7 +4,7 @@ using Moq;
 using SiteBlog.Controllers;
 using SiteBlog.Domain;
 using SiteBlog.Dto;
-using SiteBlog.Services;
+using SiteBlog.Services.Post;
 using SiteBlog.Tests.Fixture;
 using System;
 using System.Collections.Generic;

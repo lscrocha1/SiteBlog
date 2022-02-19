@@ -2,7 +2,7 @@
 using SiteBlog.Domain;
 using SiteBlog.Dto;
 using SiteBlog.Infrastructure.Attributes;
-using SiteBlog.Services;
+using SiteBlog.Services.Post;
 
 namespace SiteBlog.Controllers;
 
@@ -45,15 +45,15 @@ public class PostController : ControllerBase
     }
 
     [HttpGet]
-    [Route("{title}")]
+    [Route("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<PostDto>> GetPost([FromRoute] string title, CancellationToken cancellationToken)
+    public async Task<ActionResult<PostDto>> GetPost([FromRoute] string id, CancellationToken cancellationToken)
     {
         try
         {
-            var post = await _postService.GetPost(title, cancellationToken);
+            var post = await _postService.GetPost(id, cancellationToken);
 
             if (post is null)
                 return NotFound();
@@ -67,11 +67,10 @@ public class PostController : ControllerBase
     }
 
     [HttpPost]
-    [ApiExplorerSettings(IgnoreApi = true)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    [ServiceFilter(typeof(BasicAuthenticationAttribute))]
+    // [ServiceFilter(typeof(BasicAuthenticationAttribute))]
     public async Task<ActionResult> CreatePost([FromBody] CreatePostDto post, CancellationToken cancellationToken)
     {
         try

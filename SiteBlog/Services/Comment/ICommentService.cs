@@ -1,8 +1,6 @@
-﻿using MongoDB.Bson;
-using SiteBlog.Domain;
-using SiteBlog.Dto;
+﻿using SiteBlog.Dto;
 
-namespace SiteBlog.Services;
+namespace SiteBlog.Services.Comment;
 
 public interface ICommentService
 {

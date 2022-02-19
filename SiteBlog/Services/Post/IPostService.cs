@@ -1,7 +1,7 @@
-﻿using SiteBlog.Domain;
-using SiteBlog.Dto;
+﻿namespace SiteBlog.Services.Post;
 
-namespace SiteBlog.Services;
+using SiteBlog.Domain;
+using SiteBlog.Dto;
 
 public interface IPostService
 {
@@ -9,10 +9,10 @@ public interface IPostService
         CancellationToken cancellationToken,
         string? search = null,
         string? tag = null,
-        int page = 1, 
+        int page = 1,
         int limit = 10);
 
-    Task<PostDto?> GetPost(string postTitle, CancellationToken cancellationToken);
+    Task<PostDto?> GetPost(string id, CancellationToken cancellationToken);
 
     Task CreatePost(CreatePostDto post, CancellationToken cancellationToken);
 }

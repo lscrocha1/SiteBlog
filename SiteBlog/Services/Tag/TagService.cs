@@ -1,9 +1,7 @@
-﻿using MongoDB.Driver;
-using SiteBlog.Domain;
-using SiteBlog.Helpers;
-using SiteBlog.Repositories.Mongo;
+﻿namespace SiteBlog.Services.Tag;
 
-namespace SiteBlog.Services;
+using MongoDB.Driver;
+using SiteBlog.Repositories.Mongo;
 
 public class TagService : ITagService
 {

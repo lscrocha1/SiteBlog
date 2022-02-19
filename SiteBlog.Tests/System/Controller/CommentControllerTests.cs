@@ -6,7 +6,7 @@ using SiteBlog.Controllers;
 using SiteBlog.Domain;
 using SiteBlog.Dto;
 using SiteBlog.Infrastructure.Exceptions;
-using SiteBlog.Services;
+using SiteBlog.Services.Comment;
 using SiteBlog.Tests.Fixture;
 using System;
 using System.Threading.Tasks;

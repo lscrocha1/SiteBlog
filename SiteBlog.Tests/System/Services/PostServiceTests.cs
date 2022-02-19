@@ -4,7 +4,7 @@ using MongoDB.Driver;
 using Moq;
 using SiteBlog.Domain;
 using SiteBlog.Repositories.Mongo;
-using SiteBlog.Services;
+using SiteBlog.Services.Post;
 using SiteBlog.Tests.Fixture;
 using System;
 using System.Collections.Generic;

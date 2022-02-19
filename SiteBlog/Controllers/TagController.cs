@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SiteBlog.Domain;
 using SiteBlog.Infrastructure.Attributes;
-using SiteBlog.Services;
+using SiteBlog.Services.Tag;
 
 namespace SiteBlog.Controllers;
 

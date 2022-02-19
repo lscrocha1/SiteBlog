@@ -3,7 +3,7 @@ using MongoDB.Bson;
 using SiteBlog.Dto;
 using SiteBlog.Infrastructure.Attributes;
 using SiteBlog.Infrastructure.Exceptions;
-using SiteBlog.Services;
+using SiteBlog.Services.Comment;
 using System.ComponentModel.DataAnnotations;
 
 namespace SiteBlog.Controllers;

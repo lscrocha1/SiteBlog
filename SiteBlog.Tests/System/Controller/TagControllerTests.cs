@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SiteBlog.Controllers;
 using SiteBlog.Domain;
-using SiteBlog.Services;
+using SiteBlog.Services.Tag;
 using SiteBlog.Tests.Fixture;
 using System.Collections.Generic;
 using System.Linq;

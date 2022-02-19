@@ -9,4 +9,9 @@ public static class Helper
     {
         return Builders<T>.Filter.Where(filter);
     }
+
+    public static string FormatFilePath(string filePath)
+    {
+        return string.Join("/", filePath.Replace("\\", "/").Replace("\\\\", "/").Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries));
+    }
 }

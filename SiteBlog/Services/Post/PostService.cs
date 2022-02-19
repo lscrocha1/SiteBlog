@@ -1,12 +1,12 @@
-﻿using MongoDB.Driver;
+﻿namespace SiteBlog.Services.Post;
+
+using MongoDB.Driver;
 using SiteBlog.Adapters;
 using SiteBlog.Domain;
 using SiteBlog.Dto;
 using SiteBlog.Helpers;
 using SiteBlog.Repositories.Mongo;
-using System.Web;
-
-namespace SiteBlog.Services;
+using SiteBlog.Services.File;
 
 public class PostService : IPostService
 {
@@ -43,16 +43,13 @@ public class PostService : IPostService
         }
     }
 
-    public async Task<PostDto?> GetPost(string postTitle, CancellationToken cancellationToken)
+    public async Task<PostDto?> GetPost(string id, CancellationToken cancellationToken)
     {
         try
         {
-            _logger.LogInformation($"Getting post with title {postTitle}");
+            _logger.LogInformation($"Getting post with id {id}");
 
-            var title = HttpUtility.UrlDecode(postTitle);
-
-            var filter = Helper.GetQueryFilter<Post>(
-                post => post.Contents.Any(e => e.Title.ToLower() == title.ToLower()));
+            var filter = Helper.GetQueryFilter<Post>(e => e.Id == id);
 
             var post = await _mongoRepository.GetAsync(filter, cancellationToken);
 

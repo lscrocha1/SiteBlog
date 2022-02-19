@@ -2,7 +2,7 @@
 using MongoDB.Driver;
 using Moq;
 using SiteBlog.Repositories.Mongo;
-using SiteBlog.Services;
+using SiteBlog.Services.Tag;
 using SiteBlog.Tests.Fixture;
 using System;
 using System.Linq;

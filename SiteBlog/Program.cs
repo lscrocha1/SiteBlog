@@ -3,7 +3,11 @@ using SiteBlog.Configuration;
 using SiteBlog.Infrastructure.Attributes;
 using SiteBlog.Infrastructure.Constants;
 using SiteBlog.Repositories.Mongo;
-using SiteBlog.Services;
+using SiteBlog.Services.Comment;
+using SiteBlog.Services.File;
+using SiteBlog.Services.Image;
+using SiteBlog.Services.Post;
+using SiteBlog.Services.Tag;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,11 +27,15 @@ services.AddTransient<ICommentService, CommentService>();
 
 services.AddTransient<ITagService, TagService>();
 
+services.AddTransient<IImageService, ImageService>();
+
 services.AddSingleton(typeof(IMongoRepository<>), typeof(MongoRepository<>));
 
 services.AddSingleton<LocalizationAttribute>();
 
 services.AddSingleton<BasicAuthenticationAttribute>();
+
+services.AddSingleton<IFileService, FileService>();
 
 services.Configure<MongoConfiguration>(configuration.GetSection("MongoConfiguration"));
 
