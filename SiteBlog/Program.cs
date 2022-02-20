@@ -6,6 +6,7 @@ using SiteBlog.Repositories.Mongo;
 using SiteBlog.Services.Comment;
 using SiteBlog.Services.File;
 using SiteBlog.Services.Image;
+using SiteBlog.Services.Login;
 using SiteBlog.Services.Post;
 using SiteBlog.Services.Tag;
 
@@ -30,6 +31,8 @@ services.AddTransient<ITagService, TagService>();
 services.AddTransient<IImageService, ImageService>();
 
 services.AddSingleton(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+
+services.AddSingleton<ILoginService, LoginService>();
 
 services.AddSingleton<LocalizationAttribute>();
 

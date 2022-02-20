@@ -21,5 +21,5 @@ public class Reply
 
     public string? ReplyingToId { get; set; }
 
-    public bool Approved { get; set; }
+    public bool? Approved { get; set; }
 }

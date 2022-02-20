@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 using SiteBlog.Dto;
 using SiteBlog.Infrastructure.Attributes;
 using SiteBlog.Infrastructure.Exceptions;
@@ -64,6 +63,62 @@ public class CommentController : ControllerBase
             await _commentService.ReplyComment(postId, commentId, dto, cancellationToken);
 
             return StatusCode(201);
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
+        }
+        catch (Exception)
+        {
+            return StatusCode(500);
+        }
+    }
+
+    [HttpGet]
+    [Route("comments/approve")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ServiceFilter(typeof(BasicAuthenticationAttribute))]
+    public async Task<ActionResult<CommentToBeApprovedDto>> GetCommentsToBeApproved(
+        CancellationToken cancellationToken,
+        [FromQuery] int page = 1,
+        [FromQuery] int limit = 10)
+    {
+        try
+        {
+            var result = await _commentService.GetCommentsToBeApproved(cancellationToken, page, limit);
+
+            if (result == null || !result.Any())
+                return StatusCode(404);
+
+            return Ok(result);
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
+        }
+        catch (Exception)
+        {
+            return StatusCode(500);
+        }
+    }
+
+    [HttpPost]
+    [Route("comments/approve")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ServiceFilter(typeof(BasicAuthenticationAttribute))]
+    public async Task<ActionResult> ApproveDeny(
+        CancellationToken cancellationToken,
+        [FromBody] ApproveDenyCommentDto dto)
+    {
+        try
+        {
+            await _commentService.ApproveDeny(cancellationToken, dto);
+
+            return Ok();
         }
         catch (NotFoundException)
         {

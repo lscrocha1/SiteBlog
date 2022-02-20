@@ -90,7 +90,7 @@ public class PostService : IPostService
 
             foreach (var post in posts)
             {
-                post.Comments = post.Comments.Where(e => e.Approved).ToList();
+                post.Comments = post.Comments.Where(e => e.Approved.HasValue && e.Approved.Value).ToList();
             }
 
             return posts;

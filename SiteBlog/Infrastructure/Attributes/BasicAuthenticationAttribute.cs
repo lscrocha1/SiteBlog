@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using SiteBlog.Helpers;
 using System.Net.Http.Headers;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace SiteBlog.Infrastructure.Attributes;
@@ -79,28 +79,12 @@ public class BasicAuthenticationAttribute : IAuthorizationFilter
             return;
         }
 
-        if (HashPassword(password) != appSettingPassword)
+        if (Helper.HashPassword(password) != appSettingPassword)
         {
             ReturnUnauthorizedResult(context);
 
             return;
         }
-    }
-
-    private static string HashPassword(string input)
-    {
-        using var md5 = MD5.Create();
-
-        var inputBytes = Encoding.ASCII.GetBytes(input);
-
-        var hashBytes = md5.ComputeHash(inputBytes);
-
-        var sb = new StringBuilder();
-
-        for (int i = 0; i < hashBytes.Length; i++)
-            sb.Append(hashBytes[i].ToString("X2"));
-
-        return sb.ToString();
     }
 
     private void ReturnUnauthorizedResult(AuthorizationFilterContext context)

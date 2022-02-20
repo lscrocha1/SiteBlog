@@ -21,10 +21,16 @@ public class CommentServiceTests
     {
         // Arrange
         var mockRepository = new Mock<IMongoRepository<Post>>();
+        var mockRepositoryComment = new Mock<IMongoRepository<Comment>>();
+        var mockRepositoryReply = new Mock<IMongoRepository<Reply>>();
 
         var cancellationToken = PostFixture.GetCancellationToken();
 
-        var commentService = new CommentService(PostFixture.GetLogger<CommentService>(), mockRepository.Object);
+        var commentService = new CommentService(
+            PostFixture.GetLogger<CommentService>(), 
+            mockRepository.Object, 
+            mockRepositoryReply.Object,
+            mockRepositoryComment.Object);
 
         // Act
         // Assert
@@ -41,10 +47,16 @@ public class CommentServiceTests
     {
         // Arrange
         var mockRepository = new Mock<IMongoRepository<Post>>();
+        var mockRepositoryComment = new Mock<IMongoRepository<Comment>>();
+        var mockRepositoryReply = new Mock<IMongoRepository<Reply>>();
 
         var cancellationToken = PostFixture.GetCancellationToken();
 
-        var commentService = new CommentService(PostFixture.GetLogger<CommentService>(), mockRepository.Object);
+        var commentService = new CommentService(
+            PostFixture.GetLogger<CommentService>(),
+            mockRepository.Object,
+            mockRepositoryReply.Object,
+            mockRepositoryComment.Object);
 
         // Act
         // Assert
@@ -61,10 +73,16 @@ public class CommentServiceTests
     {
         // Arrange
         var mockRepository = new Mock<IMongoRepository<Post>>();
+        var mockRepositoryComment = new Mock<IMongoRepository<Comment>>();
+        var mockRepositoryReply = new Mock<IMongoRepository<Reply>>();
 
         var cancellationToken = PostFixture.GetCancellationToken();
 
-        var commentService = new CommentService(PostFixture.GetLogger<CommentService>(), mockRepository.Object);
+        var commentService = new CommentService(
+            PostFixture.GetLogger<CommentService>(),
+            mockRepository.Object,
+            mockRepositoryReply.Object,
+            mockRepositoryComment.Object);
 
         // Act
         // Assert

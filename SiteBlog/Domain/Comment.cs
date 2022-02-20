@@ -22,5 +22,5 @@ public class Comment
 
     public List<Reply> Replies { get; set; }
 
-    public bool Approved { get; set; }
+    public bool? Approved { get; set; }
 }
