@@ -71,7 +71,7 @@ public class PostController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     // [ServiceFilter(typeof(BasicAuthenticationAttribute))]
-    public async Task<ActionResult> CreatePost([FromBody] CreatePostDto post, CancellationToken cancellationToken)
+    public async Task<ActionResult> CreatePost([FromForm] CreatePostDto post, CancellationToken cancellationToken)
     {
         try
         {

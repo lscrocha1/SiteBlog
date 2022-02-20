@@ -10,11 +10,13 @@ using SiteBlog.Services.File;
 
 public class PostService : IPostService
 {
+    private readonly IFileService _fileService;
     private readonly ILogger<PostService> _logger;
     private readonly IMongoRepository<Post> _mongoRepository;
 
-    public PostService(ILogger<PostService> logger, IMongoRepository<Post> mongoRepository)
+    public PostService(IFileService fileService, ILogger<PostService> logger, IMongoRepository<Post> mongoRepository)
     {
+        _fileService = fileService;
         _logger = logger;
         _mongoRepository = mongoRepository;
     }
@@ -28,6 +30,11 @@ public class PostService : IPostService
             _logger.LogInformation("Adding a new post");
 
             var post = PostAdapter.MapCreatePostDto(postDto);
+
+            if (postDto.File != null)
+            {
+                post.Display = await _fileService.SaveFile(postDto.File);
+            }
 
             _logger.LogInformation("Post mapped successfully");
 
@@ -79,7 +86,14 @@ public class PostService : IPostService
         {
             var filter = GetFilter(search, tag);
 
-            return await _mongoRepository.GetAsync(filter, cancellationToken, page, limit);
+            var posts = await _mongoRepository.GetAsync(filter, cancellationToken, page, limit);
+
+            foreach (var post in posts)
+            {
+                post.Comments = post.Comments.Where(e => e.Approved).ToList();
+            }
+
+            return posts;
         }
         catch (Exception ex)
         {

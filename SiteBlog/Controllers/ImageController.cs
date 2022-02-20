@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using SiteBlog.Dto;
+using SiteBlog.Infrastructure.Exceptions;
 using SiteBlog.Services.Image;
 
 namespace SiteBlog.Controllers;
@@ -57,6 +58,10 @@ public class ImageController : ControllerBase
                 mimeType = "application/octet-stream";
 
             return File(stream, mimeType, name);
+        }
+        catch (NotFoundException)
+        {
+            return StatusCode(404);
         }
         catch (Exception)
         {

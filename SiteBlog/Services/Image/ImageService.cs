@@ -1,6 +1,7 @@
 ﻿namespace SiteBlog.Services.Image;
 
 using SiteBlog.Domain;
+using SiteBlog.Infrastructure.Exceptions;
 using SiteBlog.Repositories.Mongo;
 using SiteBlog.Services.File;
 using System;
@@ -26,6 +27,12 @@ public class ImageService : IImageService
             _logger.LogInformation($"Getting image with path {path}");
 
             return await _fileService.GetImage(path);
+        }
+        catch (NotFoundException ex)
+        {
+            _logger.LogError(ex, $"Image {path} not found");
+
+            throw;
         }
         catch (Exception ex)
         {

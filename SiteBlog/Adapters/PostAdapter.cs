@@ -50,7 +50,7 @@ public static class PostAdapter
                 Type = e.Type
             })
             .ToList(),
-            Tags = post.Tags.Select(e => new TagDto
+            Tags = post.Tags.Where(e => !string.IsNullOrEmpty(e.Name.Trim())).Select(e => new TagDto
             {
                 Name = e.Name
             })
@@ -60,19 +60,29 @@ public static class PostAdapter
 
     public static Post MapCreatePostDto(CreatePostDto postDto)
     {
+        var contents = new List<Content>
+        {
+            new Content
+            {
+                Body = postDto.PtBody,
+                Title = postDto.PtTitle,
+                Description = postDto.PtDescription,
+                Language = PostContentLanguageEnum.Portuguese
+            },
+            new Content
+            {
+                Body = postDto.EnBody,
+                Title = postDto.EnTitle,
+                Description = postDto.EnDescription,
+                Language = PostContentLanguageEnum.English
+            }
+        };
+
         return new Post
         {
             Display = postDto.Display,
             DisplayType = postDto.DisplayType,
-            Contents = postDto.Contents
-                .Select(e => new Content
-                {
-                    Body = e.Body,
-                    Description = e.Description,
-                    Language = e.Language,
-                    Title = e.Title
-                })
-                .ToList(),
+            Contents = contents,
             Images = postDto.Images
                 .Select(e => new Image
                 {
@@ -80,10 +90,11 @@ public static class PostAdapter
                     Type = e.Type
                 })
                 .ToList(),
-            Tags = postDto.Tags
+            Tags = postDto.Tags.Split(";")
+                .Where(e => !string.IsNullOrEmpty(e))
                 .Select(e => new Tag
                 {
-                    Name = e.Name
+                    Name = e
                 })
                 .ToList()
         };
