@@ -50,22 +50,15 @@ public class PostService : IPostService
         }
     }
 
-    public async Task<PostDto?> GetPost(string id, CancellationToken cancellationToken)
+    public async Task<Post?> GetPost(string url, CancellationToken cancellationToken)
     {
         try
         {
-            _logger.LogInformation($"Getting post with id {id}");
+            _logger.LogInformation($"Getting post with url {url}");
 
-            var filter = Helper.GetQueryFilter<Post>(e => e.Id == id);
+            var filter = Helper.GetQueryFilter<Post>(e => e.PtUrl == url || e.EnUrl == url);
 
-            var post = await _mongoRepository.GetAsync(filter, cancellationToken);
-
-            if (post is null)
-                return null;
-
-            _logger.LogInformation($"Found post with id {post.Id}");
-
-            return PostAdapter.MapPostDto(post);
+            return await _mongoRepository.GetAsync(filter, cancellationToken);
         }
         catch (Exception ex)
         {

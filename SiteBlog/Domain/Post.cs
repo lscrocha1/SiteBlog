@@ -12,6 +12,8 @@ public class Post
         Images = new List<Image>();
         Tags = new List<Tag>();
         Comments = new List<Comment>();
+        PtUrl = string.Empty;
+        EnUrl = string.Empty;
     }
 
     public string Id { get; set; }
@@ -31,4 +33,8 @@ public class Post
     public List<Comment> Comments { get; set; }
 
     public List<Tag> Tags { get; set; }
+
+    public string EnUrl { get; set; }
+
+    public string PtUrl { get; set; }
 }

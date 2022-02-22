@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using SiteBlog.Dto;
+using SiteBlog.Infrastructure.Attributes;
 using SiteBlog.Infrastructure.Exceptions;
 using SiteBlog.Services.Image;
 
@@ -21,7 +22,7 @@ public class ImageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    // [ServiceFilter(typeof(BasicAuthenticationAttribute))]
+    [ServiceFilter(typeof(BasicAuthenticationAttribute))]
     public async Task<ActionResult<string>> Save([FromForm] SaveImageDto image, CancellationToken cancellationToken)
     {
         try

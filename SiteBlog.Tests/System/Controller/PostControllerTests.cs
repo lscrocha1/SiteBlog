@@ -8,6 +8,7 @@ using SiteBlog.Services.Post;
 using SiteBlog.Tests.Fixture;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -116,7 +117,7 @@ public class PostControllerTests
 
         mockService
             .Setup(service => service.GetPost(It.IsAny<string>(), cancellationToken))
-            .ReturnsAsync(PostFixture.GetPostDto());
+            .ReturnsAsync(PostFixture.GetPosts().FirstOrDefault());
 
         var controller = new PostController(mockService.Object);
 
@@ -137,7 +138,7 @@ public class PostControllerTests
 
         mockService
             .Setup(service => service.GetPost(It.IsAny<string>(), cancellationToken))
-            .ReturnsAsync(PostFixture.GetPostDto());
+            .ReturnsAsync(PostFixture.GetPosts().FirstOrDefault());
 
         var controller = new PostController(mockService.Object);
 
@@ -160,7 +161,7 @@ public class PostControllerTests
 
         mockService
             .Setup(service => service.GetPost(It.IsAny<string>(), cancellationToken))
-            .ReturnsAsync(PostFixture.GetPostDto());
+            .ReturnsAsync(PostFixture.GetPosts().FirstOrDefault());
 
         var controller = new PostController(mockService.Object);
 
@@ -169,31 +170,6 @@ public class PostControllerTests
 
         // Assert
         (result.Result as OkObjectResult)!.Value.Should().NotBeNull();
-    }
-
-    [Fact]
-    public async Task GetPost_OnNoItemFound_Returns404()
-    {
-        // Arrange
-        var mockService = new Mock<IPostService>();
-
-        var cancellationToken = PostFixture.GetCancellationToken();
-
-        mockService
-            .Setup(service => service.GetPost(It.IsAny<string>(), cancellationToken))
-            .ReturnsAsync((PostDto)null!);
-
-        var controller = new PostController(mockService.Object);
-
-        // Act
-        var result = await controller.GetPost(Guid.NewGuid().ToString(), cancellationToken);
-
-        // Assert
-        result.Result.Should().BeOfType<NotFoundResult>();
-
-        var objectResult = result.Result as NotFoundResult;
-
-        objectResult!.StatusCode.Should().Be(404);
     }
 
     [Fact]

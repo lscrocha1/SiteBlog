@@ -1,6 +1,7 @@
 ﻿using SiteBlog.Domain;
 using SiteBlog.Dto;
 using SiteBlog.Infrastructure.Constants;
+using SiteBlog.Infrastructure.Extensions;
 using System.Globalization;
 
 namespace SiteBlog.Adapters;
@@ -34,7 +35,7 @@ public static class PostAdapter
                 CreatedAt = e.CreatedAt,
                 UserName = e.UserName,
                 Replies = e.Replies.Select(g => new ReplyDto
-                { 
+                {
                     Id = g.Id,
                     Content = g.Content,
                     UserName = g.UserName,
@@ -83,6 +84,8 @@ public static class PostAdapter
             Display = postDto.Display,
             DisplayType = postDto.DisplayType,
             Contents = contents,
+            EnUrl = CreatePostUrl(postDto.EnTitle),
+            PtUrl = CreatePostUrl(postDto.PtTitle),
             Images = postDto.Images
                 .Select(e => new Image
                 {
@@ -98,5 +101,18 @@ public static class PostAdapter
                 })
                 .ToList()
         };
+    }
+
+    private static string CreatePostUrl(string title)
+    {
+        title = title
+            .Trim()
+            .Replace(" ", "-")
+            .Replace("!", "")
+            .Replace("?", "")
+            .Replace("(", "")
+            .Replace(")", "");
+
+        return title.RemoveDiacritics().ToLower();
     }
 }

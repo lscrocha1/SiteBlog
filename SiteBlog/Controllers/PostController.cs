@@ -45,15 +45,15 @@ public class PostController : ControllerBase
     }
 
     [HttpGet]
-    [Route("{id}")]
+    [Route("{url}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<PostDto>> GetPost([FromRoute] string id, CancellationToken cancellationToken)
+    public async Task<ActionResult<Post>> GetPost([FromRoute] string url, CancellationToken cancellationToken)
     {
         try
         {
-            var post = await _postService.GetPost(id, cancellationToken);
+            var post = await _postService.GetPost(url, cancellationToken);
 
             if (post is null)
                 return NotFound();
@@ -70,7 +70,7 @@ public class PostController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    [ServiceFilter(typeof(BasicAuthenticationAttribute))]
+    //[ServiceFilter(typeof(BasicAuthenticationAttribute))]
     public async Task<ActionResult> CreatePost([FromForm] CreatePostDto post, CancellationToken cancellationToken)
     {
         try

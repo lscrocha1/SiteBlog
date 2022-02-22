@@ -12,7 +12,7 @@ public interface IPostService
         int page = 1,
         int limit = 10);
 
-    Task<PostDto?> GetPost(string id, CancellationToken cancellationToken);
+    Task<Post?> GetPost(string url, CancellationToken cancellationToken);
 
     Task CreatePost(CreatePostDto post, CancellationToken cancellationToken);
 }
