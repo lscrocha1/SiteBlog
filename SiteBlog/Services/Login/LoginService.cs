@@ -26,7 +26,7 @@ public class LoginService : ILoginService
             if (userNameConfig != username)
                 throw new UnauthorizedException();
 
-            if (passwordConfig != Helper.HashPassword(passwordConfig))
+            if (passwordConfig != Helper.HashPassword(password))
                 throw new UnauthorizedException();
 
             var basic = $"{username}:{password}";
