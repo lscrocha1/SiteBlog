@@ -17,8 +17,8 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - FileRootPath=/C/blog
     ports:
-      - "58481:80"
-      - "58482:443"
+      - "57481:80"
+      - "57482:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

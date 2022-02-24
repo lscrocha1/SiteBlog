@@ -28,9 +28,7 @@ public class CommentServiceTests
 
         var commentService = new CommentService(
             PostFixture.GetLogger<CommentService>(), 
-            mockRepository.Object, 
-            mockRepositoryReply.Object,
-            mockRepositoryComment.Object);
+            mockRepository.Object);
 
         // Act
         // Assert
@@ -54,9 +52,7 @@ public class CommentServiceTests
 
         var commentService = new CommentService(
             PostFixture.GetLogger<CommentService>(),
-            mockRepository.Object,
-            mockRepositoryReply.Object,
-            mockRepositoryComment.Object);
+            mockRepository.Object);
 
         // Act
         // Assert
@@ -80,9 +76,7 @@ public class CommentServiceTests
 
         var commentService = new CommentService(
             PostFixture.GetLogger<CommentService>(),
-            mockRepository.Object,
-            mockRepositoryReply.Object,
-            mockRepositoryComment.Object);
+            mockRepository.Object);
 
         // Act
         // Assert

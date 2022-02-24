@@ -44,9 +44,7 @@ public class BasicAuthenticationAttribute : IAuthorizationFilter
             return;
         }
 
-        var authValue = AuthenticationHeaderValue.Parse(authHeader);
-
-        var bytes = Convert.FromBase64String(authValue.Parameter!);
+        var bytes = Convert.FromBase64String(authHeader);
 
         var credentials = Encoding.UTF8.GetString(bytes).Split(':', 2);
 

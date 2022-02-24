@@ -40,13 +40,18 @@ public static class CommentAdapter
             })
             .ToList();
 
-        var result = comments.Select(e => new CommentToBeApprovedDto
-        {
-            Id = e.Id,
-            Content = e.Content,
-            Username = e.UserName
-        })
-        .ToList();
+        var result = comments
+            .Where(e => e.Approved == null)
+            .Select(e => new CommentToBeApprovedDto
+            {
+                Id = e.Id,
+                Content = e.Content,
+                Username = e.UserName
+            })
+            .ToList();
+
+        if (result == null)
+            result = new List<CommentToBeApprovedDto>();
 
         result.AddRange(replies);
 
