@@ -5,6 +5,7 @@ using SiteBlog.Adapters;
 using SiteBlog.Domain;
 using SiteBlog.Dto;
 using SiteBlog.Helpers;
+using SiteBlog.Infrastructure.Exceptions;
 using SiteBlog.Repositories.Mongo;
 using SiteBlog.Services.File;
 
@@ -22,7 +23,7 @@ public class PostService : IPostService
     }
 
     public async Task CreatePost(
-        CreatePostDto postDto,
+        CreateEditPostDto postDto,
         CancellationToken cancellationToken)
     {
         try
@@ -126,5 +127,67 @@ public class PostService : IPostService
         }
 
         return filterResult;
+    }
+
+    public async Task EditPost(CreateEditPostDto dto, CancellationToken cancellationToken)
+    {
+        try
+        {
+            _logger.LogInformation($"Editing post with id {dto.Id}");
+
+            var filter = Helper.GetQueryFilter<Post>(e => e.Id == dto.Id);
+
+            var post = PostAdapter.MapCreatePostDto(dto);
+
+            if (dto.File != null)
+            {
+                post.Display = await _fileService.SaveFile(dto.File);
+            }
+
+            var update = Builders<Post>.Update
+                .Set(e => e.Contents, post.Contents)
+                .Set(e => e.UpdatedAt, DateTime.Now)
+                .Set(e => e.EnUrl, post.EnUrl)
+                .Set(e => e.PtUrl, post.PtUrl)
+                .Set(e => e.Tags, post.Tags);
+
+            await _mongoRepository.UpdateAsync(filter, update, cancellationToken);
+
+            _logger.LogInformation("Post edit successfully");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"An error happend while editing a post with id {dto.Id}. Error: {ex.Message}");
+
+            throw;
+        }
+    }
+
+    public async Task Remove(string id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            _logger.LogInformation($"Editing post with id {id}");
+
+            var filter = Helper.GetQueryFilter<Post>(e => e.Id == id);
+
+            var post = await _mongoRepository.GetAsync(filter, cancellationToken);
+
+            if (post is null)
+                throw new NotFoundException();
+
+            if (post.Display != null && post.DisplayType == PostDisplayTypeEnum.Image)
+                await _fileService.Remove(post.Display);
+
+            await _mongoRepository.DeleteAsync(filter, cancellationToken);
+
+            _logger.LogInformation("Post deleted successfully");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"An error happend while deleting a post with id {id}. Error: {ex.Message}");
+
+            throw;
+        }
     }
 }

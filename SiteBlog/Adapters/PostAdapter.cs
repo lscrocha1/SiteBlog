@@ -59,7 +59,7 @@ public static class PostAdapter
         };
     }
 
-    public static Post MapCreatePostDto(CreatePostDto postDto)
+    public static Post MapCreatePostDto(CreateEditPostDto postDto)
     {
         var contents = new List<Content>
         {

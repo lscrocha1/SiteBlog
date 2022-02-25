@@ -200,6 +200,6 @@ public class PostControllerTests
 
         // Assert
         mockService.Verify(service =>
-            service.CreatePost(It.IsAny<CreatePostDto>(), It.IsAny<CancellationToken>()), Times.Once());
+            service.CreatePost(It.IsAny<CreateEditPostDto>(), It.IsAny<CancellationToken>()), Times.Once());
     }
 }

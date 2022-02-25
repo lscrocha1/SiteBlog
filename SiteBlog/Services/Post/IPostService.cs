@@ -14,5 +14,9 @@ public interface IPostService
 
     Task<Post?> GetPost(string url, CancellationToken cancellationToken);
 
-    Task CreatePost(CreatePostDto post, CancellationToken cancellationToken);
+    Task CreatePost(CreateEditPostDto post, CancellationToken cancellationToken);
+
+    Task EditPost(CreateEditPostDto post, CancellationToken cancellationToken);
+
+    Task Remove(string id, CancellationToken cancellationToken);
 }

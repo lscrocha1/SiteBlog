@@ -36,6 +36,20 @@ public class FileService : IFileService
         }
     }
 
+    public Task Remove(string filePath)
+    {
+        filePath = Helper.FormatFilePath(filePath);
+
+        var folderPath = _configuration["FileRootPath"];
+
+        var pathFile = Path.Combine(folderPath, filePath);
+
+        if (File.Exists(pathFile))
+            File.Delete(pathFile);
+
+        return Task.CompletedTask;
+    }
+
     public async Task<string> SaveFile(IFormFile file)
     {
         var folderPath = _configuration["FileRootPath"];
