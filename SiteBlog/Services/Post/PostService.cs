@@ -149,6 +149,8 @@ public class PostService : IPostService
                 .Set(e => e.UpdatedAt, DateTime.Now)
                 .Set(e => e.EnUrl, post.EnUrl)
                 .Set(e => e.PtUrl, post.PtUrl)
+                .Set(e => e.Display, post.Display)
+                .Set(e => e.DisplayType, post.DisplayType)
                 .Set(e => e.Tags, post.Tags);
 
             await _mongoRepository.UpdateAsync(filter, update, cancellationToken);
