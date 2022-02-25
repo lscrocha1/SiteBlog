@@ -42,6 +42,7 @@ public class ImageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ResponseCache(Duration = 3600, Location = ResponseCacheLocation.Any, NoStore = false)]
     public async Task<ActionResult> Get(string path)
     {
         try

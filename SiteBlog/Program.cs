@@ -22,6 +22,8 @@ services.AddSwaggerGen();
 
 services.AddControllers();
 
+builder.Services.AddResponseCaching();
+
 services.AddTransient<IPostService, PostService>();
 
 services.AddTransient<ICommentService, CommentService>();
@@ -79,6 +81,8 @@ var localizationOptions = new RequestLocalizationOptions
 app.UseRequestLocalization(localizationOptions);
 
 app.UseCors(corsName);
+
+app.UseResponseCaching();
 
 app.MapControllers();
 

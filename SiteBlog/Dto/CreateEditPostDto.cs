@@ -1,4 +1,5 @@
 ﻿using SiteBlog.Domain;
+using System.ComponentModel.DataAnnotations;
 
 namespace SiteBlog.Dto;
 
@@ -6,7 +7,6 @@ public class CreateEditPostDto
 {
     public CreateEditPostDto()
     {
-        Id = string.Empty;
         Display = string.Empty;
         PtTitle = string.Empty;
         PtDescription = string.Empty;
@@ -18,7 +18,7 @@ public class CreateEditPostDto
         Tags = string.Empty;
     }
 
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     public PostDisplayTypeEnum DisplayType { get; set; }
 

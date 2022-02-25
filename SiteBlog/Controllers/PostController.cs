@@ -23,6 +23,7 @@ public class PostController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ResponseCache(Duration = 300, Location = ResponseCacheLocation.Any, NoStore = false)]
     public async Task<ActionResult<List<Post>>> GetPosts(
         CancellationToken cancellationToken,
         [FromQuery] string? search = null,
@@ -50,6 +51,7 @@ public class PostController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ResponseCache(Duration = 300, Location = ResponseCacheLocation.Any, NoStore = false)]
     public async Task<ActionResult<Post>> GetPost([FromRoute] string url, CancellationToken cancellationToken)
     {
         try
