@@ -123,7 +123,7 @@ public class PostService : IPostService
         {
             tag = tag.Trim().ToLower();
 
-            filterResult &= filter.Where(e => e.Tags.Select(g => g.Name.ToLower()).Contains(tag));
+            filterResult &= filter.Where(e => e.Tags.Any(e => e.Name.ToLower() == tag.ToLower()));
         }
 
         return filterResult;

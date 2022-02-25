@@ -53,7 +53,7 @@ public static class PostAdapter
             .ToList(),
             Tags = post.Tags.Where(e => !string.IsNullOrEmpty(e.Name.Trim())).Select(e => new TagDto
             {
-                Name = e.Name
+                Name = e.Name.ToLower()
             })
             .ToList(),
         };
