@@ -1,9 +1,9 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0.2-bullseye-slim-arm64v8 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0.200-bullseye-slim-arm64v8 AS build
 WORKDIR /src
 COPY ["SiteBlog/SiteBlog.csproj", "SiteBlog/"]
 RUN dotnet restore "SiteBlog/SiteBlog.csproj"
